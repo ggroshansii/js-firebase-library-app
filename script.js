@@ -1,4 +1,27 @@
 
+const searchBtn = document.querySelector(".search-btn");
+const titleInput = document.querySelector("#book-title");
+const authorInput = document.querySelector("#book-author");
+const subjectInput = document.querySelector("#book-subject");
+
+let searchData = {
+    title: "",
+    author: "",
+    subject: "",
+}
+
+searchBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    searchData = {
+        title: titleInput.value,
+        author: authorInput.value,
+        subject: subjectInput.value,
+
+    }
+
+    console.log(searchData)
+})
+
 async function queryBooks() {
     const options = {
         method: "GET"
@@ -9,4 +32,3 @@ async function queryBooks() {
     console.log(data);
 }
 
-queryBooks();
