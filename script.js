@@ -18,17 +18,17 @@ searchBtn.addEventListener("click", (e) => {
         subject: subjectInput.value,
 
     }
-
     console.log(searchData)
+    queryBooks()
 })
 
 async function queryBooks() {
     const options = {
         method: "GET"
     }
-    const response = await fetch("https://www.googleapis.com/books/v1/volumes?q=quilting&key=AIzaSyDhnFHiBiax8maT3xgRGpe14SUPQG8iaMc", options);
-    console.log(response);
+    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${searchData.title}&inauthor:${searchData.author}&insubject:${searchData.subject}&key=AIzaSyDhnFHiBiax8maT3xgRGpe14SUPQG8iaMc`, options);
     const data = await response.json();
-    console.log(data);
+    console.log(data)
 }
+
 
