@@ -1,10 +1,49 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+.header-container {
+    height: 15vh;
+    position: relative;
+}
+
+.header-main-heading {
+    font-family: 'Lobster', cursive;
+    width: 100%;
+    text-align: center;
+    font-size: 4rem;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    position: relative;
+    top: 40px;
+}
+
+.primary-content-flex-container {
+    display: flex;
+}
+
+.main-container {
+    border: 1px solid green;
+    width: 100%;
+}
+
+.main-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.collapse-expand-btn {
+    position: absolute;
+    bottom: 3px;
+}
+
 .modal-book-outer-container {
     margin: 1rem auto;
     padding-top: 1rem;
     border-top: 1px solid black;
-
-
 }
 
 .modal-book-inner-container {
