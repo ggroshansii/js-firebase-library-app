@@ -1,0 +1,27 @@
+
+.modal-book-outer-container {
+    margin: 1rem auto;
+    padding-top: 1rem;
+    border-top: 1px solid black;
+
+
+}
+
+.modal-book-inner-container {
+    display: flex;
+    margin-top: 1.5rem;
+}
+
+.modal-book-desc-btn-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 60%;
+    margin: auto;
+}
+
+.modal-book-add-btn {
+    margin: auto;
+}
