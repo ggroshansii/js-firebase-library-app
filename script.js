@@ -6,6 +6,7 @@ const subjectInput = document.querySelector("#book-subject");
 
 const modal = new bootstrap.Modal(document.getElementById('bookModal'));
 const modalBody = document.querySelector('.modal-body');
+const modalCloseBtn = document.querySelector('.btn-close');
 
 let searchData = {
     title: "",
@@ -13,7 +14,7 @@ let searchData = {
     subject: "",
 }
 
-let searchResults;
+let searchResults = null;
 
 searchBtn.addEventListener("click", (e) => {
     e.preventDefault()
@@ -23,14 +24,7 @@ searchBtn.addEventListener("click", (e) => {
         subject: subjectInput.value,
 
     }
-    modal.toggle()
-
     queryBooks();
-
-    setTimeout(() => {
-        displaySearchResults();
-
-    }, 900)
 })
 
 async function queryBooks() {
@@ -40,10 +34,17 @@ async function queryBooks() {
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${searchData.title}&inauthor:${searchData.author}&insubject:${searchData.subject}&key=AIzaSyDhnFHiBiax8maT3xgRGpe14SUPQG8iaMc`, options);
     const data = await response.json();
     searchResults = data;
+    modal.toggle()
+    displaySearchResults();
 }
 
 
+
+
 function displaySearchResults() {
+    console.log("***************",searchResults)
+
+
     searchResults.items.forEach(item => {
         
         if (item.volumeInfo.imageLinks) {
@@ -89,3 +90,7 @@ function displaySearchResults() {
     modal.show();
 }
 
+modalCloseBtn.addEventListener('click', ()=> {
+    modalBody.innerHTML = "";
+    searchResults = null;
+})
