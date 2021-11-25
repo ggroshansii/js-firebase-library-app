@@ -62,6 +62,11 @@ function displaySearchResults() {
             bookAuthors.textContent = authors.join(", ");
             bookOuterContainer.append(bookAuthors);
 
+            let bookPageCount = document.createElement('p');
+            bookPageCount.classList.add('modal-book-page-count');
+            bookPageCount.textContent = item.volumeInfo.pageCount + ' pages';
+            bookOuterContainer.append(bookPageCount);
+
             let bookInnerContainer = document.createElement('div');
             bookInnerContainer.classList.add("modal-book-inner-container");
 
@@ -69,6 +74,8 @@ function displaySearchResults() {
             let bookImg = document.createElement('img');
             bookImg.src = item.volumeInfo.imageLinks.thumbnail;
             bookImgDiv.append(bookImg);
+
+
             bookInnerContainer.append(bookImgDiv);
 
             let bookDescBtnContainer = document.createElement('div');
@@ -92,7 +99,7 @@ function displaySearchResults() {
         }
 
 
-        console.log(item.volumeInfo)
+        console.log(item)
     })
     modal.show();
 }
