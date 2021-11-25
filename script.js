@@ -4,7 +4,8 @@ const titleInput = document.querySelector("#book-title");
 const authorInput = document.querySelector("#book-author");
 const subjectInput = document.querySelector("#book-subject");
 
-const modal = new bootstrap.Modal(document.getElementById('bookModal'));
+const modal = new bootstrap.Modal(document.getElementById('bookModal')); //activates content as a modal
+const myModal = document.getElementById('bookModal'); //modal itself
 const modalBody = document.querySelector('.modal-body');
 const modalCloseBtn = document.querySelector('.btn-close');
 
@@ -42,9 +43,6 @@ async function queryBooks() {
 
 
 function displaySearchResults() {
-    console.log("***************",searchResults)
-
-
     searchResults.items.forEach(item => {
         
         if (item.volumeInfo.imageLinks) {
@@ -90,7 +88,14 @@ function displaySearchResults() {
     modal.show();
 }
 
-modalCloseBtn.addEventListener('click', ()=> {
+// modalCloseBtn.addEventListener('click', ()=> {
+
+// })
+
+myModal.addEventListener('hide.bs.modal', (e) => {
     modalBody.innerHTML = "";
     searchResults = null;
-})
+    titleInput.value = "";
+    authorInput.value = "";
+    subjectInput.value = "";
+  })
