@@ -53,6 +53,15 @@ function displaySearchResults() {
             bookTitle.textContent = item.volumeInfo.title;
             bookOuterContainer.append(bookTitle);
 
+            let bookAuthors = document.createElement('h3');
+            let authors = [];
+            item.volumeInfo.authors.forEach(author => {
+                authors.push(author);
+            })
+            bookAuthors.classList.add('modal-book-authors');
+            bookAuthors.textContent = authors.join(", ");
+            bookOuterContainer.append(bookAuthors);
+
             let bookInnerContainer = document.createElement('div');
             bookInnerContainer.classList.add("modal-book-inner-container");
 
