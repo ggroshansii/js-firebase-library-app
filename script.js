@@ -20,7 +20,7 @@ let searchData = {
 let searchResults = null;
 let library = [];
 
-function Book (title, author, pageCount, rating, bookCover) {
+function Book(title, author, pageCount, rating, bookCover) {
     this.title = title;
     this.author = author;
     this.pageCount = pageCount;
@@ -112,7 +112,6 @@ function displaySearchResultsModal() {
         }
     });
     addBookToLibrary();
-
 }
 
 function addBookToLibrary() {
@@ -129,27 +128,38 @@ function addBookToLibrary() {
             );
             library.push(newBook);
             console.log(library);
-            displayLibraryInGrid();
+            displayLibraryBooks();
         });
     });
-
 }
 
-function displayLibraryInGrid() {
+function displayLibraryBooks() {
     let gridContainer = document.querySelector(".main-grid-container");
     gridContainer.innerHTML = "";
-    library.forEach(bookObj => {
- 
-                const bookItemContainer = document.createElement('div');
-                bookItemContainer.classList.add('book-item-container');
+    library.forEach((bookObj, idx) => {
+        const bookItemContainer = document.createElement("div");
+        bookItemContainer.classList.add("book-item-container");
 
-                bookItemContainer.style.backgroundImage = `url(${bookObj.bookCover})`;
-                bookItemContainer.style.backgroundSize = 'cover';
-
-                gridContainer.append(bookItemContainer);
-    })
+        bookItemContainer.style.backgroundImage = `url(${bookObj.bookCover})`;
+        bookItemContainer.style.backgroundSize = "cover";
+        bookItemContainer.innerHTML =
+            '<i class="fas fa-times book-item-delete-btn"></i>';
+        gridContainer.append(bookItemContainer);
+    });
+    deleteBook();
 }
 
+function deleteBook() {
+    const deleteIcon = document.querySelectorAll(".book-item-delete-btn");
+    deleteIcon.forEach((icon, idx) => {
+        icon.value = idx;
+        icon.addEventListener("click", () => {
+            console.log(icon.value)
+            library.splice(icon.value, 1);
+            displayLibraryBooks();
+        });
+    });
+}
 
 mySearchModal.addEventListener("hide.bs.modal", (e) => {
     modalBody.innerHTML = "";

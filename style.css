@@ -82,5 +82,23 @@
     height: 300px;
     border: 1px solid black;
     margin: auto;
+    position: relative;
 }
 
+.book-item-cover {
+    height: 100px;
+}
+
+.book-item-delete-btn {
+    font-size: 1.75rem;
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    color: black;
+    background-color:transparent;
+}
+
+.book-item-delete-btn:hover {
+    color: red;
+    cursor: pointer;
+}
