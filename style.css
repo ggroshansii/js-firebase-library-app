@@ -21,10 +21,6 @@
     top: 40px;
 }
 
-.primary-content-flex-container {
-    display: flex;
-}
-
 .main-container {
     border: 1px solid green;
     width: 100%;
@@ -74,4 +70,10 @@
 
 .modal-book-add-btn {
     margin: auto;
+}
+
+.book-item-container {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
 }

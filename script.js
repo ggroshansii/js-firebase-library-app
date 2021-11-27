@@ -103,18 +103,27 @@ function displaySearchResults() {
             modalBody.append(bookOuterContainer);
         }
     })
-    // addBookBtnFunctionality();
+    addBookFunctionality();
     searchModal.show();
 }
 
-// function addBookBtnFunctionality() {
-//     const addBtns = document.querySelectorAll(".modal-book-add-btn");
-//     addBtns.forEach(btn => {
-//         btn.addEventListener(()=> {
+function addBookFunctionality() {
+    const addBtns = document.querySelectorAll(".modal-book-add-btn");
+    addBtns.forEach((btn, idx) => {
+        // btn.value = idx; //btn value will be index so book can be accessed in searchResults (array) via this index
+        btn.addEventListener('click', ()=> {
+            const bookDetails = searchResults[idx]
+            const gridContainer = document.querySelector(".main-grid-container");
+            const bookItemContainer = document.createElement('div');
+            bookItemContainer.classList.add('book-item-container');
 
-//         })
-//     })
-// }
+            bookItemContainer.style.backgroundImage = `url(${bookDetails.volumeInfo.imageLinks.thumbnail})`;
+            bookItemContainer.style.backgroundSize = 'cover';
+
+            gridContainer.append(bookItemContainer);
+        })
+    })
+}
 
 mySearchModal.addEventListener('hide.bs.modal', (e) => {
     modalBody.innerHTML = "";
