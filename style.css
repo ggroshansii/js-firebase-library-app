@@ -83,6 +83,14 @@
     border: 1px solid black;
     margin: auto;
     position: relative;
+    border-radius: 10px;
+    transition: all 2s;
+}
+
+.book-item-container:hover {
+    background-image:none !important;
+    background-color: white;
+    cursor: pointer;
 }
 
 .book-item-cover {
@@ -104,4 +112,19 @@
     color: white;
     background-color: black;
     cursor: pointer;
+}
+
+.status-btn {
+    border-top-left-radius: 8px;
+    border: none;
+    padding: 0.25rem 0.5rem;
+}
+
+.status-not-read {
+    background-color: tomato;
+
+}
+
+.status-read {
+    background-color: lightgreen;
 }

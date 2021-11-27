@@ -20,10 +20,12 @@ let searchData = {
 let searchResults = null;
 let library = [];
 
-function Book(title, author, pageCount, rating, bookCover) {
+function Book(title, author, totalPages, rating, bookCover) {
     this.title = title;
     this.author = author;
-    this.pageCount = pageCount;
+    this.totalPages = totalPages;
+    this.readPages = null;
+    this.haveRead = false;
     this.rating = rating;
     this.bookCover = bookCover;
 }
@@ -65,9 +67,11 @@ function displaySearchResultsModal() {
 
             let bookAuthors = document.createElement("h3");
             let authors = [];
-            item.volumeInfo.authors.forEach((author) => {
-                authors.push(author);
-            });
+            if (authors.length > 0) {
+                item.volumeInfo.authors.forEach((author) => {
+                    authors.push(author);
+                });
+            }
             bookAuthors.classList.add("modal-book-authors");
             bookAuthors.textContent = authors.join(", ");
             bookOuterContainer.append(bookAuthors);
@@ -144,9 +148,20 @@ function displayLibraryBooks() {
         bookItemContainer.style.backgroundSize = "cover";
         bookItemContainer.innerHTML =
             '<i class="fas fa-times book-item-delete-btn"></i>';
+        const readStatusBtn = document.createElement("button");
+        if (bookObj.haveRead === false) {
+            readStatusBtn.classList.add("status-btn", "status-not-read");
+            readStatusBtn.textContent = "Not Read";
+        } else {
+            readStatusBtn.classList.add("status-btn", "status-read");
+            readStatusBtn.textContent = "Read";
+        }
+
+        bookItemContainer.append(readStatusBtn);
         gridContainer.append(bookItemContainer);
     });
     deleteBook();
+    toggleStatusBtn();
 }
 
 function deleteBook() {
@@ -154,9 +169,26 @@ function deleteBook() {
     deleteIcon.forEach((icon, idx) => {
         icon.value = idx;
         icon.addEventListener("click", () => {
-            console.log(icon.value)
+            console.log(icon.value);
             library.splice(icon.value, 1);
             displayLibraryBooks();
+        });
+    });
+}
+
+function toggleStatusBtn() {
+    const statusBtn = document.querySelectorAll(".status-btn");
+    statusBtn.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            btn.classList.toggle("status-read");
+            btn.classList.toggle("status-not-read");
+            if (btn.classList.contains("status-read")) {
+                btn.textContent = "Read";
+            } else {
+                btn.textContent = "Not Read";
+            }
+
+            console.log("FIRED");
         });
     });
 }
