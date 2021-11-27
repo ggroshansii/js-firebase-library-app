@@ -93,12 +93,15 @@
     font-size: 1.75rem;
     position: absolute;
     top: 3px;
-    right: 5px;
+    right: 3px;
     color: black;
-    background-color:transparent;
+    background-color:white;
+    padding: 0.25rem 0.35rem;
+    border-radius: 20px;
 }
 
 .book-item-delete-btn:hover {
-    color: red;
+    color: white;
+    background-color: black;
     cursor: pointer;
 }
