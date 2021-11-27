@@ -28,7 +28,12 @@
 
 .main-grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    justify-content: center;
+    align-content: flex-start;
+    height: 85vh;
+    padding: 2rem;
+    gap: 1.5rem;
 }
 
 .collapse-expand-btn {
@@ -74,6 +79,8 @@
 
 .book-item-container {
     width: 200px;
-    height: 200px;
+    height: 300px;
     border: 1px solid black;
+    margin: auto;
 }
+
