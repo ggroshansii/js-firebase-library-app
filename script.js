@@ -40,7 +40,7 @@ async function queryBooks() {
     }
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${searchData.title}&inauthor:${searchData.author}&insubject:${searchData.subject}&key=AIzaSyDhnFHiBiax8maT3xgRGpe14SUPQG8iaMc`, options);
     const data = await response.json();
-    searchResults = data;
+    searchResults = data.items;
     console.log("SR", searchResults);
     searchModal.toggle()
     displaySearchResults();
@@ -48,7 +48,7 @@ async function queryBooks() {
 
 
 function displaySearchResults() {
-    searchResults.items.forEach(item => {
+    searchResults.forEach(item => {
         
         if (item.volumeInfo.imageLinks) {
             let bookOuterContainer = document.createElement('div');
