@@ -1,5 +1,11 @@
-//To Do: have searchResults assigned items instead of entire obj (will have to refactor createElement forEach())
-//Add functionality to 'add book btns' -> btn will grab index of searchResults array, then make new Book (make constructor), and add that new Book instance to Library array
+// Need to fix author / subject search in fetch 
+// Collapse search form after clicking 'search' / Align search form to bottom of header
+// Modal that asks how many pages youve read for that book when book item clicked
+// Disable hover/mouseover when trying to click Status Btn or Delete icon
+// Hover/mouseover shows Title, Author, Rating and Progress Bar
+
+// Local storage saving
+// Save to firebase option (Sign In button)
 
 const searchBtn = document.querySelector(".search-btn");
 const titleInput = document.querySelector("#book-title");
@@ -45,7 +51,7 @@ async function queryBooks() {
         method: "GET",
     };
     const response = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=intitle:${searchData.title}&inauthor:${searchData.author}&insubject:${searchData.subject}&key=AIzaSyDhnFHiBiax8maT3xgRGpe14SUPQG8iaMc`,
+        `https://www.googleapis.com/books/v1/volumes?q=intitle:${searchData.title}+inauthor:${searchData.author}&insubject:${searchData.subject}&key=AIzaSyDhnFHiBiax8maT3xgRGpe14SUPQG8iaMc`,
         options
     );
     const data = await response.json();
