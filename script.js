@@ -50,7 +50,6 @@ async function queryBooks() {
     );
     const data = await response.json();
     searchResults = data.items;
-    console.log("SR", searchResults);
     searchModal.toggle();
     displaySearchResultsModal();
 }
@@ -131,7 +130,6 @@ function addBookToLibrary() {
                 currentBook.imageLinks.thumbnail
             );
             library.push(newBook);
-            console.log(library);
             displayLibraryBooks();
         });
     });
@@ -149,6 +147,7 @@ function displayLibraryBooks() {
         bookItemContainer.innerHTML =
             '<i class="fas fa-times book-item-delete-btn"></i>';
         const readStatusBtn = document.createElement("button");
+        readStatusBtn.value = idx;
         if (bookObj.haveRead === false) {
             readStatusBtn.classList.add("status-btn", "status-not-read");
             readStatusBtn.textContent = "Not Read";
@@ -156,7 +155,6 @@ function displayLibraryBooks() {
             readStatusBtn.classList.add("status-btn", "status-read");
             readStatusBtn.textContent = "Read";
         }
-
         bookItemContainer.append(readStatusBtn);
         gridContainer.append(bookItemContainer);
     });
@@ -169,7 +167,6 @@ function deleteBook() {
     deleteIcon.forEach((icon, idx) => {
         icon.value = idx;
         icon.addEventListener("click", () => {
-            console.log(icon.value);
             library.splice(icon.value, 1);
             displayLibraryBooks();
         });
@@ -184,11 +181,11 @@ function toggleStatusBtn() {
             btn.classList.toggle("status-not-read");
             if (btn.classList.contains("status-read")) {
                 btn.textContent = "Read";
+                library[btn.value].haveRead = true;
             } else {
                 btn.textContent = "Not Read";
+                library[btn.value].haveRead = false;
             }
-
-            console.log("FIRED");
         });
     });
 }
