@@ -47,11 +47,23 @@ searchBtn.addEventListener("click", (e) => {
 });
 
 async function queryBooks() {
+
+    let searchTitle;
+    let searchAuthor;
+    let searchSubject;
+
+    searchData.title ? searchTitle = `intitle:${searchData.title}` : searchTitle = "";
+    searchData.author ? searchAuthor = `+inauthor:${searchData.author}`: searchAuthor = "";
+    searchData.subject ? searchSubject = `+insubject:${searchData.subject}` : searchSubject = "";
+
+    console.log(searchData.title, searchData.author, searchData.subject)
+    console.log(searchTitle, searchAuthor, searchSubject)
+
     const options = {
         method: "GET",
     };
     const response = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=intitle:${searchData.title}+inauthor:${searchData.author}&insubject:${searchData.subject}&key=AIzaSyDhnFHiBiax8maT3xgRGpe14SUPQG8iaMc`,
+        `https://www.googleapis.com/books/v1/volumes?q=${searchTitle}${searchAuthor}${searchSubject}&key=AIzaSyDhnFHiBiax8maT3xgRGpe14SUPQG8iaMc`,
         options
     );
     const data = await response.json();
