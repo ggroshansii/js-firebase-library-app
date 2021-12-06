@@ -1,4 +1,3 @@
-// Need to fix author / subject search in fetch 
 // Collapse search form after clicking 'search' / Align search form to bottom of header
 // Modal that asks how many pages youve read for that book when book item clicked
 // Disable hover/mouseover when trying to click Status Btn or Delete icon
@@ -11,6 +10,8 @@ const searchBtn = document.querySelector(".search-btn");
 const titleInput = document.querySelector("#book-title");
 const authorInput = document.querySelector("#book-author");
 const subjectInput = document.querySelector("#book-subject");
+
+const searchForm = document.querySelector('#collapseForm');
 
 const searchModal = new bootstrap.Modal(document.getElementById("bookModal")); //activates content as a modal
 const mySearchModal = document.getElementById("bookModal"); //modal itself
@@ -43,7 +44,11 @@ searchBtn.addEventListener("click", (e) => {
         author: authorInput.value,
         subject: subjectInput.value,
     };
+    let hideSearchForm = new bootstrap.Collapse(searchForm, { // collapses search form
+        hide: true
+      })
     queryBooks();
+
 });
 
 async function queryBooks() {
@@ -68,6 +73,7 @@ async function queryBooks() {
     );
     const data = await response.json();
     searchResults = data.items;
+
     searchModal.toggle();
     displaySearchResultsModal();
 }
@@ -215,3 +221,7 @@ mySearchModal.addEventListener("hide.bs.modal", (e) => {
     authorInput.value = "";
     subjectInput.value = "";
 });
+
+searchForm.addEventListener('hidden.bs.collapse', function () {
+    
+  })
