@@ -1,7 +1,7 @@
-// Collapse search form after clicking 'search' / Align search form to bottom of header
 // Modal that asks how many pages youve read for that book when book item clicked
 // Disable hover/mouseover when trying to click Status Btn or Delete icon
 // Hover/mouseover shows Title, Author, Rating and Progress Bar
+// Limit amount of words in modal 
 
 // Local storage saving
 // Save to firebase option (Sign In button)
@@ -166,9 +166,13 @@ function displayLibraryBooks() {
         const bookItemContainer = document.createElement("div");
         bookItemContainer.classList.add("book-item-container");
 
+        const bookButtonContainer = document.createElement("div");
+        const bookCoverContainer = document.createElement("div");
+        bookCoverContainer.classList.add("book-cover-container");
+
         bookItemContainer.style.backgroundImage = `url(${bookObj.bookCover})`;
         bookItemContainer.style.backgroundSize = "cover";
-        bookItemContainer.innerHTML =
+        bookButtonContainer.innerHTML =
             '<i class="fas fa-times book-item-delete-btn"></i>';
         const readStatusBtn = document.createElement("button");
         readStatusBtn.value = idx;
@@ -179,7 +183,10 @@ function displayLibraryBooks() {
             readStatusBtn.classList.add("status-btn", "status-read");
             readStatusBtn.textContent = "Read";
         }
-        bookItemContainer.append(readStatusBtn);
+        bookButtonContainer.append(readStatusBtn);
+        bookButtonContainer.classList.add("hide");
+        bookItemContainer.append(bookButtonContainer);
+        bookItemContainer.append(bookCoverContainer);
         gridContainer.append(bookItemContainer);
     });
     deleteBook();
@@ -214,6 +221,13 @@ function toggleStatusBtn() {
     });
 }
 
+function hideContentHover() {
+    const bookItemContainer = document.createElement("div");
+    bookItemContainer.addEventListener("mouseover", () => {
+
+    })
+}
+
 mySearchModal.addEventListener("hide.bs.modal", (e) => {
     modalBody.innerHTML = "";
     searchResults = null;
@@ -221,7 +235,3 @@ mySearchModal.addEventListener("hide.bs.modal", (e) => {
     authorInput.value = "";
     subjectInput.value = "";
 });
-
-searchForm.addEventListener('hidden.bs.collapse', function () {
-    
-  })
