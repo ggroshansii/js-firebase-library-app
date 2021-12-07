@@ -27,7 +27,8 @@ let searchData = {
 let searchResults = null;
 let library = [];
 
-function Book(title, author, totalPages, rating, bookCover) {
+function Book(id, title, author, totalPages, rating, bookCover) {
+    this.id = id;
     this.title = title;
     this.author = author;
     this.totalPages = totalPages;
@@ -73,7 +74,7 @@ async function queryBooks() {
     );
     const data = await response.json();
     searchResults = data.items;
-
+    console.log(searchResults);
     searchModal.toggle();
     displaySearchResultsModal();
 }
@@ -145,13 +146,14 @@ function addBookToLibrary() {
     const addBtns = document.querySelectorAll(".modal-book-add-btn");
     addBtns.forEach((btn, idx) => {
         btn.addEventListener("click", () => {
-            const currentBook = searchResults[idx].volumeInfo;
+            const currentBook = searchResults[idx];
             const newBook = new Book(
-                currentBook.title,
-                currentBook.authors,
-                currentBook.pageCount,
-                currentBook.averageRating,
-                currentBook.imageLinks.thumbnail
+                currentBook.id,
+                currentBook.volumeInfo.title,
+                currentBook.volumeInfo.authors,
+                currentBook.volumeInfo.pageCount,
+                currentBook.volumeInfo.averageRating,
+                currentBook.volumeInfo.imageLinks.thumbnail
             );
             library.push(newBook);
             displayLibraryBooks();
@@ -165,6 +167,7 @@ function displayLibraryBooks() {
     library.forEach((bookObj, idx) => {
         const bookItemContainer = document.createElement("div");
         bookItemContainer.classList.add("book-item-container");
+        bookItemContainer.setAttribute("id", bookObj.id);
 
         const bookButtonContainer = document.createElement("div");
         const bookCoverContainer = document.createElement("div");
@@ -184,14 +187,15 @@ function displayLibraryBooks() {
             readStatusBtn.textContent = "Read";
         }
         bookButtonContainer.append(readStatusBtn);
-        bookButtonContainer.classList.add("hide", "book-btn-container");
+        // bookButtonContainer.classList.add("hide", "book-btn-container");
         bookItemContainer.append(bookButtonContainer);
         bookItemContainer.append(bookCoverContainer);
         gridContainer.append(bookItemContainer);
     });
     deleteBook();
     toggleStatusBtn();
-    showContentHover();
+    // showContentMouseEnter();
+    // hideContentMouseLeave();
 }
 
 function deleteBook() {
@@ -222,15 +226,45 @@ function toggleStatusBtn() {
     });
 }
 
-function showContentHover() {
-    const bookItemContainer = document.querySelector(".book-item-container");
-
-    bookItemContainer.addEventListener("mouseenter", () => {
-        const bookButtonContainer = document.querySelector(".book-btn-container");
-        console.log(bookButtonContainer)
-        bookButtonContainer.classList.remove("hide");
+//work on this next
+function hideBookCover() {
+    const bookCoverContainers= querySelectorAll(".book-cover-container");
+    bookCoverContainers.forEach(bookCoverContainer => {
+        bookCoverContainer.addEventListener('click', ()=>{
+            console.log(bookCoverContainer)
+            const bookItemContainers = document.querySelectorAll(".book-item-container");
+            bookItemContainers.forEach(bookItemContainer => {
+                bookItemContainer.style.backgroundImage = "";
+            })
+        })
     })
 }
+
+// function showContentMouseEnter() {
+//     const bookItemContainerNodeList = document.querySelectorAll(".book-item-container");
+
+//     bookItemContainerNodeList.forEach(bookItem => {
+//         console.log(bookItem)
+//         bookItem.addEventListener("mouseenter", () => {
+//             const bookButtonContainerNodeList = document.querySelectorAll(".book-btn-container");
+
+//             bookButtonContainerNodeList.forEach(bookBtnContainer => {
+//                 bookBtnContainer.classList.remove('hide');
+//             })
+//         })
+//     })
+// }
+
+// function hideContentMouseLeave() {
+//     const bookItemContainer = document.querySelectorAll(".book-item-container");
+
+//     // bookItemContainer.addEventListener("mouseleave", () => {
+//     //     const bookButtonContainer = document.querySelector(".book-btn-container");
+//     //     console.log(bookButtonContainer)
+//     //     bookButtonContainer.classList.add("hide");
+//     // })
+// }
+
 
 mySearchModal.addEventListener("hide.bs.modal", (e) => {
     modalBody.innerHTML = "";

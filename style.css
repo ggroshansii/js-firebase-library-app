@@ -87,11 +87,15 @@
     transition: all 2s;
 }
 
-/* .book-item-container:hover {
+/* .book-cover-container:hover {
     background-image:none !important;
     background-color: white;
     cursor: pointer;
 } */
+
+.book-cover-container {
+    height: 265px;
+}
 
 .book-item-cover {
     height: 100px;
