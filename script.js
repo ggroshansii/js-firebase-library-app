@@ -184,13 +184,14 @@ function displayLibraryBooks() {
             readStatusBtn.textContent = "Read";
         }
         bookButtonContainer.append(readStatusBtn);
-        bookButtonContainer.classList.add("hide");
+        bookButtonContainer.classList.add("hide", "book-btn-container");
         bookItemContainer.append(bookButtonContainer);
         bookItemContainer.append(bookCoverContainer);
         gridContainer.append(bookItemContainer);
     });
     deleteBook();
     toggleStatusBtn();
+    showContentHover();
 }
 
 function deleteBook() {
@@ -221,10 +222,13 @@ function toggleStatusBtn() {
     });
 }
 
-function hideContentHover() {
-    const bookItemContainer = document.createElement("div");
-    bookItemContainer.addEventListener("mouseover", () => {
+function showContentHover() {
+    const bookItemContainer = document.querySelector(".book-item-container");
 
+    bookItemContainer.addEventListener("mouseenter", () => {
+        const bookButtonContainer = document.querySelector(".book-btn-container");
+        console.log(bookButtonContainer)
+        bookButtonContainer.classList.remove("hide");
     })
 }
 
