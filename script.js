@@ -1,5 +1,5 @@
 // Modal that asks how many pages youve read for that book when book item clicked
-// Disable hover/mouseover when trying to click Status Btn or Delete icon
+// Disable hover/mouseover when trying to click Status Btn or Delete icon -> lower div in book item that will trigger background image change
 // Hover/mouseover shows Title, Author, Rating and Progress Bar
 // Limit amount of words in modal 
 
@@ -191,11 +191,14 @@ function displayLibraryBooks() {
         bookItemContainer.append(bookButtonContainer);
         bookItemContainer.append(bookCoverContainer);
         gridContainer.append(bookItemContainer);
+
+        hideBookCover(bookObj.id);
     });
     deleteBook();
     toggleStatusBtn();
     // showContentMouseEnter();
     // hideContentMouseLeave();
+
 }
 
 function deleteBook() {
@@ -226,17 +229,12 @@ function toggleStatusBtn() {
     });
 }
 
-//work on this next
-function hideBookCover() {
-    const bookCoverContainers= querySelectorAll(".book-cover-container");
-    bookCoverContainers.forEach(bookCoverContainer => {
-        bookCoverContainer.addEventListener('click', ()=>{
-            console.log(bookCoverContainer)
-            const bookItemContainers = document.querySelectorAll(".book-item-container");
-            bookItemContainers.forEach(bookItemContainer => {
-                bookItemContainer.style.backgroundImage = "";
-            })
-        })
+// work on this next
+function hideBookCover(id) {
+    const bookItem = document.getElementById(id);
+    bookItem.addEventListener("mouseover", (e)=> {
+        let index = library.findIndex(book => book.id === id);
+        console.log(library[index]);
     })
 }
 
