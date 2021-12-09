@@ -262,6 +262,12 @@ function displayDetails(id) {
     const title = document.createElement('p');
     title.textContent = library[index].title;
     bookLowerDiv.append(title);
+
+    const author = document.createElement('p');
+    author.textContent = library[index].author;
+    bookLowerDiv.append(author);
+
+    
 }
 
 mySearchModal.addEventListener("hide.bs.modal", (e) => {
