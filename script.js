@@ -19,6 +19,9 @@ const mySearchModal = document.getElementById("bookModal"); //modal itself
 const modalBody = document.querySelector(".modal-body");
 const modalCloseBtn = document.querySelector(".btn-close");
 
+
+console.log('LS', localStorage)
+
 let searchData = {
     title: "",
     author: "",
@@ -79,7 +82,6 @@ async function queryBooks() {
     );
     const data = await response.json();
     searchResults = data.items;
-    console.log(searchResults);
     searchModal.toggle();
     displaySearchResultsModal();
 }
@@ -161,6 +163,7 @@ function addBookToLibrary() {
                 currentBook.volumeInfo.imageLinks.thumbnail
             );
             library.push(newBook);
+            localStorage.setItem(localStorage.length, JSON.stringify(newBook));
             displayLibraryBooks();
         });
     });
