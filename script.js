@@ -261,14 +261,17 @@ function displayDetails(id) {
 
     const title = document.createElement("p");
     title.textContent = library[index].title;
+    title.classList.add('remove-events');
     bookLowerDiv.append(title);
 
     const author = document.createElement("p");
     author.textContent = library[index].author;
+    author.classList.add('remove-events');
     bookLowerDiv.append(author);
 
     const rating = document.createElement("p");
     rating.innerHTML = `<p>${calculateRating(library[index].rating)}</p>`;
+    rating.classList.add('remove-events');
     bookLowerDiv.append(rating);
 }
 

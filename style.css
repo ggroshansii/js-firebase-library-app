@@ -85,6 +85,7 @@
     position: relative;
     border-radius: 10px;
     transition: all 2s;
+
 }
 
 /* .book-cover-container:hover {
@@ -139,4 +140,8 @@
 
 .book-btn-container {
     height: 5rem;
+}
+
+.remove-events {
+    pointer-events: none;
 }
