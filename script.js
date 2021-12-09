@@ -176,7 +176,7 @@ function displayLibraryBooks() {
 
         const bookButtonContainer = document.createElement("div");
         const bookLowerDiv = document.createElement("div");
-        bookLowerDiv.classList.add("book-cover-container");
+        bookLowerDiv.classList.add("book-lower-div");
         bookLowerDiv.setAttribute("id",`${bookObj.id}-lower-div`);
 
         bookItemContainer.style.backgroundImage = `url(${bookObj.bookCover})`;

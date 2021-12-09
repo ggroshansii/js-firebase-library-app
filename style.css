@@ -93,8 +93,8 @@
     cursor: pointer;
 } */
 
-.book-cover-container {
-    height: 200px;
+.book-lower-div {
+    height: 220px;
 }
 
 .book-item-cover {
@@ -138,5 +138,5 @@
 }
 
 .book-btn-container {
-    height: 2rem;
+    height: 5rem;
 }
