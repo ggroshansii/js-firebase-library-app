@@ -234,51 +234,35 @@ function toggleStatusBtn() {
     });
 }
 
-// work on this next
 function hideBookCover(id) {
     const bookLowerDiv = document.getElementById(`${id}-lower-div`);
     const bookContainer = document.getElementById(`${id}-container`); 
     bookLowerDiv.addEventListener("mouseenter", () => {
-
         bookContainer.style.backgroundImage = "";
+        displayDetails(id);
     });
 
     bookContainer.addEventListener("mouseout", () => {
         let index = library.findIndex((book) => book.id === id);
-        // const bookContainer = document.getElementById(`${id}-container`); 
-
         bookContainer.style.backgroundImage = `url(${library[index].bookCover})`;
         bookContainer.style.backgroundSize = "cover";
         bookContainer.style.backgroundRepeat = "no-repeat";
+        console.log(library[index])
 
-        console.log(library[index]);
+        while(bookLowerDiv.firstChild) {
+            bookLowerDiv.removeChild(bookLowerDiv.firstChild);
+        }
     });
 }
 
-// function showContentMouseEnter() {
-//     const bookItemContainerNodeList = document.querySelectorAll(".book-item-container");
+function displayDetails(id) {
+    const bookLowerDiv = document.getElementById(`${id}-lower-div`);
+    let index = library.findIndex((book) => book.id === id);
 
-//     bookItemContainerNodeList.forEach(bookItem => {
-//         console.log(bookItem)
-//         bookItem.addEventListener("mouseenter", () => {
-//             const bookButtonContainerNodeList = document.querySelectorAll(".book-btn-container");
-
-//             bookButtonContainerNodeList.forEach(bookBtnContainer => {
-//                 bookBtnContainer.classList.remove('hide');
-//             })
-//         })
-//     })
-// }
-
-// function hideContentMouseLeave() {
-//     const bookItemContainer = document.querySelectorAll(".book-item-container");
-
-//     // bookItemContainer.addEventListener("mouseleave", () => {
-//     //     const bookButtonContainer = document.querySelector(".book-btn-container");
-//     //     console.log(bookButtonContainer)
-//     //     bookButtonContainer.classList.add("hide");
-//     // })
-// }
+    const title = document.createElement('p');
+    title.textContent = library[index].title;
+    bookLowerDiv.append(title);
+}
 
 mySearchModal.addEventListener("hide.bs.modal", (e) => {
     modalBody.innerHTML = "";
