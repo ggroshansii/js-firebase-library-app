@@ -142,6 +142,9 @@
     height: 5rem;
 }
 
-.remove-events {
+.book-details {
     pointer-events: none;
+    text-align: center;
+    font-weight: 600;
+    padding: 5px;
 }

@@ -261,17 +261,17 @@ function displayDetails(id) {
 
     const title = document.createElement("p");
     title.textContent = library[index].title;
-    title.classList.add('remove-events');
+    title.classList.add('book-details');
     bookLowerDiv.append(title);
 
     const author = document.createElement("p");
     author.textContent = library[index].author;
-    author.classList.add('remove-events');
+    author.classList.add('book-details');
     bookLowerDiv.append(author);
 
     const rating = document.createElement("p");
     rating.innerHTML = `<p>${calculateRating(library[index].rating)}</p>`;
-    rating.classList.add('remove-events');
+    rating.classList.add('book-details');
     bookLowerDiv.append(rating);
 }
 
@@ -292,7 +292,7 @@ function calculateRating(number) {
     }
 }
 
-mySearchModal.addEventListener("hide.bs.modal", (e) => {
+mySearchModal.addEventListener("hide.bs.modal", (e) => { 
     modalBody.innerHTML = "";
     searchResults = null;
     titleInput.value = "";
