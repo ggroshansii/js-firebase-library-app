@@ -1,7 +1,7 @@
 // Modal that asks how many pages youve read for that book when book item clicked
 // Disable hover/mouseover when trying to click Status Btn or Delete icon -> lower div in book item that will trigger background image change
 // Hover/mouseover shows Title, Author, Rating and Progress Bar
-// Limit amount of words in modal 
+// Limit amount of words in modal
 
 // Local storage saving
 // Save to firebase option (Sign In button)
@@ -11,7 +11,7 @@ const titleInput = document.querySelector("#book-title");
 const authorInput = document.querySelector("#book-author");
 const subjectInput = document.querySelector("#book-subject");
 
-const searchForm = document.querySelector('#collapseForm');
+const searchForm = document.querySelector("#collapseForm");
 
 const searchModal = new bootstrap.Modal(document.getElementById("bookModal")); //activates content as a modal
 const mySearchModal = document.getElementById("bookModal"); //modal itself
@@ -45,25 +45,30 @@ searchBtn.addEventListener("click", (e) => {
         author: authorInput.value,
         subject: subjectInput.value,
     };
-    let hideSearchForm = new bootstrap.Collapse(searchForm, { // collapses search form
-        hide: true
-      })
+    let hideSearchForm = new bootstrap.Collapse(searchForm, {
+        // collapses search form
+        hide: true,
+    });
     queryBooks();
-
 });
 
 async function queryBooks() {
-
     let searchTitle;
     let searchAuthor;
     let searchSubject;
 
-    searchData.title ? searchTitle = `intitle:${searchData.title}` : searchTitle = "";
-    searchData.author ? searchAuthor = `+inauthor:${searchData.author}`: searchAuthor = "";
-    searchData.subject ? searchSubject = `+insubject:${searchData.subject}` : searchSubject = "";
+    searchData.title
+        ? (searchTitle = `intitle:${searchData.title}`)
+        : (searchTitle = "");
+    searchData.author
+        ? (searchAuthor = `+inauthor:${searchData.author}`)
+        : (searchAuthor = "");
+    searchData.subject
+        ? (searchSubject = `+insubject:${searchData.subject}`)
+        : (searchSubject = "");
 
-    console.log(searchData.title, searchData.author, searchData.subject)
-    console.log(searchTitle, searchAuthor, searchSubject)
+    console.log(searchData.title, searchData.author, searchData.subject);
+    console.log(searchTitle, searchAuthor, searchSubject);
 
     const options = {
         method: "GET",
@@ -166,12 +171,13 @@ function displayLibraryBooks() {
     gridContainer.innerHTML = "";
     library.forEach((bookObj, idx) => {
         const bookItemContainer = document.createElement("div");
-        bookItemContainer.classList.add("book-item-container");
+        bookItemContainer.classList.add("book-item-container", bookObj.id);
         bookItemContainer.setAttribute("id", bookObj.id);
 
         const bookButtonContainer = document.createElement("div");
         const bookCoverContainer = document.createElement("div");
-        bookCoverContainer.classList.add("book-cover-container");
+        bookCoverContainer.classList.add("book-cover-container", bookObj.id);
+        bookCoverContainer.setAttribute("id", bookObj.id);
 
         bookItemContainer.style.backgroundImage = `url(${bookObj.bookCover})`;
         bookItemContainer.style.backgroundSize = "cover";
@@ -198,7 +204,6 @@ function displayLibraryBooks() {
     toggleStatusBtn();
     // showContentMouseEnter();
     // hideContentMouseLeave();
-
 }
 
 function deleteBook() {
@@ -232,10 +237,25 @@ function toggleStatusBtn() {
 // work on this next
 function hideBookCover(id) {
     const bookItem = document.getElementById(id);
-    bookItem.addEventListener("mouseover", (e)=> {
-        let index = library.findIndex(book => book.id === id);
+    bookItem.addEventListener("mouseenter", (e) => {
+        let index = library.findIndex((book) => book.id === id);
+        const bookContainers = document.querySelectorAll(`.${id}`); //more than one because bookcover container and bookitem container have same class, hovering over bookcover container should trigger bookitem container's image to hide (this is to eliminate clashing hover effects)
+        bookContainers.forEach(
+            (bookContainer) => (bookContainer.style.backgroundImage = "")
+        );
         console.log(library[index]);
-    })
+    });
+
+    bookItem.addEventListener("mouseout", (e) => {
+        let index = library.findIndex((book) => book.id === id);
+        const bookContainer = document.getElementById(`${id}`); //more than one because bookcover container and bookitem container have same class, hovering over bookcover container should trigger bookitem container's image to hide (this is to eliminate clashing hover effects)
+
+        bookContainer.style.backgroundImage = `url(${library[index].bookCover})`;
+        bookContainer.style.backgroundSize = "cover";
+        bookContainer.style.backgroundRepeat = "no-repeat";
+
+        console.log(library[index]);
+    });
 }
 
 // function showContentMouseEnter() {
@@ -262,7 +282,6 @@ function hideBookCover(id) {
 //     //     bookButtonContainer.classList.add("hide");
 //     // })
 // }
-
 
 mySearchModal.addEventListener("hide.bs.modal", (e) => {
     modalBody.innerHTML = "";
