@@ -172,12 +172,12 @@ function displayLibraryBooks() {
     library.forEach((bookObj, idx) => {
         const bookItemContainer = document.createElement("div");
         bookItemContainer.classList.add("book-item-container");
-        bookItemContainer.setAttribute("id", bookObj.id);
+        bookItemContainer.setAttribute("id", `${bookObj.id}-container`);
 
         const bookButtonContainer = document.createElement("div");
-        const bookCoverContainer = document.createElement("div");
-        bookCoverContainer.classList.add("book-cover-container", bookObj.id);
-        // bookCoverContainer.setAttribute("id", bookObj.id);
+        const bookLowerDiv = document.createElement("div");
+        bookLowerDiv.classList.add("book-cover-container");
+        bookLowerDiv.setAttribute("id",`${bookObj.id}-lower-div`);
 
         bookItemContainer.style.backgroundImage = `url(${bookObj.bookCover})`;
         bookItemContainer.style.backgroundSize = "cover";
@@ -195,7 +195,7 @@ function displayLibraryBooks() {
         bookButtonContainer.append(readStatusBtn);
         bookButtonContainer.classList.add("book-btn-container");
         bookItemContainer.append(bookButtonContainer);
-        bookItemContainer.append(bookCoverContainer);
+        bookItemContainer.append(bookLowerDiv);
         gridContainer.append(bookItemContainer);
 
         hideBookCover(bookObj.id);
@@ -236,16 +236,16 @@ function toggleStatusBtn() {
 
 // work on this next
 function hideBookCover(id) {
-    const bookItem = document.querySelector(`.${id}`);
-    bookItem.addEventListener("mouseenter", (e) => {
-        const bookContainer = document.getElementById(`${id}`); //more than one because bookcover container and bookitem container have same class, hovering over bookcover container should trigger bookitem container's image to hide (this is to eliminate clashing hover effects)
+    const bookLowerDiv = document.getElementById(`${id}-lower-div`);
+    const bookContainer = document.getElementById(`${id}-container`); 
+    bookLowerDiv.addEventListener("mouseenter", () => {
+
         bookContainer.style.backgroundImage = "";
-        console.log(library[index]);
     });
 
-    bookItem.addEventListener("mouseout", (e) => {
+    bookContainer.addEventListener("mouseout", () => {
         let index = library.findIndex((book) => book.id === id);
-        const bookContainer = document.getElementById(`${id}`); //more than one because bookcover container and bookitem container have same class, hovering over bookcover container should trigger bookitem container's image to hide (this is to eliminate clashing hover effects)
+        // const bookContainer = document.getElementById(`${id}-container`); 
 
         bookContainer.style.backgroundImage = `url(${library[index].bookCover})`;
         bookContainer.style.backgroundSize = "cover";
