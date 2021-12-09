@@ -20,7 +20,6 @@ const modalBody = document.querySelector(".modal-body");
 const modalCloseBtn = document.querySelector(".btn-close");
 
 
-console.log('LS', localStorage)
 
 let searchData = {
     title: "",
@@ -40,6 +39,8 @@ function Book(id, title, author, totalPages, rating, bookCover) {
     this.rating = rating;
     this.bookCover = bookCover;
 }
+
+displayLibraryBooks();
 
 searchBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -172,7 +173,8 @@ function addBookToLibrary() {
 function displayLibraryBooks() {
     let gridContainer = document.querySelector(".main-grid-container");
     gridContainer.innerHTML = "";
-    library.forEach((bookObj, idx) => {
+    Object.values(localStorage).forEach((bookObj, idx) => {
+        bookObj = JSON.parse(bookObj);
         const bookItemContainer = document.createElement("div");
         bookItemContainer.classList.add("book-item-container");
         bookItemContainer.setAttribute("id", `${bookObj.id}-container`);
@@ -205,8 +207,6 @@ function displayLibraryBooks() {
     });
     deleteBook();
     toggleStatusBtn();
-    // showContentMouseEnter();
-    // hideContentMouseLeave();
 }
 
 function deleteBook() {
@@ -246,8 +246,11 @@ function hideBookCover(id) {
     });
 
     bookContainer.addEventListener("mouseout", () => {
-        let index = library.findIndex((book) => book.id === id);
-        bookContainer.style.backgroundImage = `url(${library[index].bookCover})`;
+        let index = Object.values(localStorage).findIndex(book => {
+            book = JSON.parse(book);
+            return book.id === id
+        });
+        bookContainer.style.backgroundImage = `url(${JSON.parse(Object.values(localStorage)[index]).bookCover})`;
         bookContainer.style.backgroundSize = "cover";
         bookContainer.style.backgroundRepeat = "no-repeat";
         console.log(library[index]);
@@ -260,20 +263,23 @@ function hideBookCover(id) {
 
 function displayDetails(id) {
     const bookLowerDiv = document.getElementById(`${id}-lower-div`);
-    let index = library.findIndex((book) => book.id === id);
+    let index = Object.values(localStorage).findIndex(book => {
+        book = JSON.parse(book);
+        return book.id === id
+    });
 
     const title = document.createElement("p");
-    title.textContent = library[index].title;
+    title.textContent = JSON.parse(Object.values(localStorage)[index]).title;
     title.classList.add('book-details');
     bookLowerDiv.append(title);
 
     const author = document.createElement("p");
-    author.textContent = library[index].author;
+    author.textContent = JSON.parse(Object.values(localStorage)[index]).author;
     author.classList.add('book-details');
     bookLowerDiv.append(author);
 
     const rating = document.createElement("p");
-    rating.innerHTML = `<p>${calculateRating(library[index].rating)}</p>`;
+    rating.innerHTML = `<p>${calculateRating(JSON.parse(Object.values(localStorage)[index]).rating)}</p>`;
     rating.classList.add('book-details');
     bookLowerDiv.append(rating);
 }
