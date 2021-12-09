@@ -177,7 +177,7 @@ function displayLibraryBooks() {
         const bookButtonContainer = document.createElement("div");
         const bookLowerDiv = document.createElement("div");
         bookLowerDiv.classList.add("book-lower-div");
-        bookLowerDiv.setAttribute("id",`${bookObj.id}-lower-div`);
+        bookLowerDiv.setAttribute("id", `${bookObj.id}-lower-div`);
 
         bookItemContainer.style.backgroundImage = `url(${bookObj.bookCover})`;
         bookItemContainer.style.backgroundSize = "cover";
@@ -236,8 +236,8 @@ function toggleStatusBtn() {
 
 function hideBookCover(id) {
     const bookLowerDiv = document.getElementById(`${id}-lower-div`);
-    const bookContainer = document.getElementById(`${id}-container`); 
-    bookLowerDiv.addEventListener("mouseenter", () => {
+    const bookContainer = document.getElementById(`${id}-container`);
+    bookLowerDiv.addEventListener("mouseover", () => {
         bookContainer.style.backgroundImage = "";
         displayDetails(id);
     });
@@ -247,9 +247,9 @@ function hideBookCover(id) {
         bookContainer.style.backgroundImage = `url(${library[index].bookCover})`;
         bookContainer.style.backgroundSize = "cover";
         bookContainer.style.backgroundRepeat = "no-repeat";
-        console.log(library[index])
+        console.log(library[index]);
 
-        while(bookLowerDiv.firstChild) {
+        while (bookLowerDiv.firstChild) {
             bookLowerDiv.removeChild(bookLowerDiv.firstChild);
         }
     });
@@ -259,15 +259,34 @@ function displayDetails(id) {
     const bookLowerDiv = document.getElementById(`${id}-lower-div`);
     let index = library.findIndex((book) => book.id === id);
 
-    const title = document.createElement('p');
+    const title = document.createElement("p");
     title.textContent = library[index].title;
     bookLowerDiv.append(title);
 
-    const author = document.createElement('p');
+    const author = document.createElement("p");
     author.textContent = library[index].author;
     bookLowerDiv.append(author);
 
-    
+    const rating = document.createElement("p");
+    rating.innerHTML = `<p>${calculateRating(library[index].rating)}</p>`;
+    bookLowerDiv.append(rating);
+}
+
+function calculateRating(number) {
+    switch (number) {
+        case 1:
+            return "&#9733;&#9734;&#9734;&#9734;&#9734;";
+        case 2:
+            return "&#9733;&#9733;&#9734;&#9734;&#9734;";
+        case 3:
+            return "&#9733;&#9733;&#9733;&#9734;&#9734;";
+        case 4:
+            return "&#9733;&#9733;&#9733;&#9733;&#9734;";
+        case 5:
+            return "&#9733;&#9733;&#9733;&#9733;&#9733;";
+        default:
+            return "No Rating";
+    }
 }
 
 mySearchModal.addEventListener("hide.bs.modal", (e) => {
