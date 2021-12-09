@@ -94,7 +94,7 @@
 } */
 
 .book-cover-container {
-    height: 265px;
+    height: 200px;
 }
 
 .book-item-cover {
@@ -135,4 +135,8 @@
 
 .hide {
     visibility: hidden;
+}
+
+.book-btn-container {
+    height: 2rem;
 }

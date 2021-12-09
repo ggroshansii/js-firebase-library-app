@@ -171,13 +171,13 @@ function displayLibraryBooks() {
     gridContainer.innerHTML = "";
     library.forEach((bookObj, idx) => {
         const bookItemContainer = document.createElement("div");
-        bookItemContainer.classList.add("book-item-container", bookObj.id);
+        bookItemContainer.classList.add("book-item-container");
         bookItemContainer.setAttribute("id", bookObj.id);
 
         const bookButtonContainer = document.createElement("div");
         const bookCoverContainer = document.createElement("div");
         bookCoverContainer.classList.add("book-cover-container", bookObj.id);
-        bookCoverContainer.setAttribute("id", bookObj.id);
+        // bookCoverContainer.setAttribute("id", bookObj.id);
 
         bookItemContainer.style.backgroundImage = `url(${bookObj.bookCover})`;
         bookItemContainer.style.backgroundSize = "cover";
@@ -193,7 +193,7 @@ function displayLibraryBooks() {
             readStatusBtn.textContent = "Read";
         }
         bookButtonContainer.append(readStatusBtn);
-        // bookButtonContainer.classList.add("hide", "book-btn-container");
+        bookButtonContainer.classList.add("book-btn-container");
         bookItemContainer.append(bookButtonContainer);
         bookItemContainer.append(bookCoverContainer);
         gridContainer.append(bookItemContainer);
@@ -236,13 +236,10 @@ function toggleStatusBtn() {
 
 // work on this next
 function hideBookCover(id) {
-    const bookItem = document.getElementById(id);
+    const bookItem = document.querySelector(`.${id}`);
     bookItem.addEventListener("mouseenter", (e) => {
-        let index = library.findIndex((book) => book.id === id);
-        const bookContainers = document.querySelectorAll(`.${id}`); //more than one because bookcover container and bookitem container have same class, hovering over bookcover container should trigger bookitem container's image to hide (this is to eliminate clashing hover effects)
-        bookContainers.forEach(
-            (bookContainer) => (bookContainer.style.backgroundImage = "")
-        );
+        const bookContainer = document.getElementById(`${id}`); //more than one because bookcover container and bookitem container have same class, hovering over bookcover container should trigger bookitem container's image to hide (this is to eliminate clashing hover effects)
+        bookContainer.style.backgroundImage = "";
         console.log(library[index]);
     });
 
