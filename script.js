@@ -41,6 +41,7 @@ function Book(id, title, author, totalPages, rating, bookCover) {
 }
 
 displayLibraryBooks();
+console.log(localStorage);
 
 searchBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -187,7 +188,7 @@ function displayLibraryBooks() {
         bookItemContainer.style.backgroundImage = `url(${bookObj.bookCover})`;
         bookItemContainer.style.backgroundSize = "cover";
         bookButtonContainer.innerHTML =
-            '<i class="fas fa-times book-item-delete-btn"></i>';
+            `<i class="${bookObj.id} fas fa-times book-item-delete-btn ${bookObj.id}"></i>`;
         const readStatusBtn = document.createElement("button");
         readStatusBtn.value = idx;
         if (bookObj.haveRead === false) {
@@ -212,9 +213,13 @@ function displayLibraryBooks() {
 function deleteBook() {
     const deleteIcon = document.querySelectorAll(".book-item-delete-btn");
     deleteIcon.forEach((icon, idx) => {
-        icon.value = idx;
         icon.addEventListener("click", () => {
-            library.splice(icon.value, 1);
+            for (prop in localStorage) {
+                console.log(JSON.parse(localStorage[prop]).id, icon.classList)
+                // if (JSON.parse(localStorage[prop]).id === icon.value) {
+                //     delete localStorage[prop];
+                // }
+            }
             displayLibraryBooks();
         });
     });
@@ -253,7 +258,6 @@ function hideBookCover(id) {
         bookContainer.style.backgroundImage = `url(${JSON.parse(Object.values(localStorage)[index]).bookCover})`;
         bookContainer.style.backgroundSize = "cover";
         bookContainer.style.backgroundRepeat = "no-repeat";
-        console.log(library[index]);
 
         while (bookLowerDiv.firstChild) {
             bookLowerDiv.removeChild(bookLowerDiv.firstChild);
