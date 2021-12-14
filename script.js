@@ -176,6 +176,8 @@ function displayLibraryBooks() {
     gridContainer.innerHTML = "";
     Object.values(localStorage).forEach((bookObj, idx) => {
         bookObj = JSON.parse(bookObj);
+
+        console.log(bookObj.id)
         const bookItemContainer = document.createElement("div");
         bookItemContainer.classList.add("book-item-container");
         bookItemContainer.setAttribute("id", `${bookObj.id}-container`);
@@ -188,7 +190,7 @@ function displayLibraryBooks() {
         bookItemContainer.style.backgroundImage = `url(${bookObj.bookCover})`;
         bookItemContainer.style.backgroundSize = "cover";
         bookButtonContainer.innerHTML =
-            `<i class="${bookObj.id} fas fa-times book-item-delete-btn ${bookObj.id}"></i>`;
+            `<i class="${bookObj.id} fas fa-times book-item-delete-btn "></i>`;
         const readStatusBtn = document.createElement("button");
         readStatusBtn.value = idx;
         if (bookObj.haveRead === false) {
@@ -215,12 +217,12 @@ function deleteBook() {
     deleteIcon.forEach((icon, idx) => {
         icon.addEventListener("click", () => {
             for (prop in localStorage) {
-                console.log(JSON.parse(localStorage[prop]).id, icon.classList)
-                // if (JSON.parse(localStorage[prop]).id === icon.value) {
-                //     delete localStorage[prop];
-                // }
+                if (JSON.parse(localStorage[prop]).id === icon.classList[0]) {
+                    delete localStorage[prop];
+                    displayLibraryBooks();
+                }
             }
-            displayLibraryBooks();
+
         });
     });
 }
