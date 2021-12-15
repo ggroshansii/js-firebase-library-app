@@ -6,6 +6,24 @@
 // Local storage saving
 // Save to firebase option (Sign In button)
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+    apiKey: "AIzaSyDe12ZKQ_n8P6XobCKBw8sQQAuyX48-tXk",
+    authDomain: "library-70105.firebaseapp.com",
+    projectId: "library-70105",
+    storageBucket: "library-70105.appspot.com",
+    messagingSenderId: "837460230526",
+    appId: "1:837460230526:web:de0f6255972a8d6b6bb32f",
+    measurementId: "G-D6165JVV4T"
+  };
+  
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+
+
+
 const searchBtn = document.querySelector(".search-btn");
 const titleInput = document.querySelector("#book-title");
 const authorInput = document.querySelector("#book-author");
