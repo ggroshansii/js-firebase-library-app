@@ -6,10 +6,21 @@
 // Local storage saving
 // Save to firebase option (Sign In button)
 
+
   document.addEventListener("DOMContentLoaded", e => {
     console.log(firebase);
     const app = firebase.app();
     console.log('hey', app);
+
+    db = firebase.firestore();
+    var docRef = db.collection("books");
+    docRef.get().then(result => {
+        if (result) {
+            console.log("RESULTS", result);
+        } else {
+            console.error("error")
+        }
+    })
   })
 
 const searchBtn = document.querySelector(".search-btn");
@@ -26,7 +37,6 @@ const modalBody = document.querySelector(".modal-body");
 const modalCloseBtn = document.querySelector(".btn-close");
 
 
-
 let searchData = {
     title: "",
     author: "",
@@ -34,6 +44,7 @@ let searchData = {
 };
 let searchResults = null;
 let library = [];
+let userCred;
 
 function Book(id, title, author, totalPages, rating, bookCover) {
     this.id = id;
@@ -172,7 +183,28 @@ function addBookToLibrary() {
             );
             library.push(newBook);
             localStorage.setItem(localStorage.length, JSON.stringify(newBook));
+
+            let db = firebase.firestore();
+
+            if (userCred) {
+                console.log("FIRED");
+                let bookRating;
+                newBook.rating === undefined ? bookRating = "No Rating" : bookRating = newBook.rating;
+
+                db.collection('users').doc(userCred.uid).collection('books').doc(newBook.id).set({
+                    id: newBook.id,
+                    title: newBook.title,
+                    author: newBook.author,
+                    totalPages: newBook.totalPages,
+                    readPages: null,
+                    haveRead: false,
+                    rating: bookRating,
+                    bookCover: newBook.bookCover,
+                })
+            }
+
             displayLibraryBooks();
+            console.log(library);
         });
     });
 }
@@ -297,6 +329,7 @@ function displayDetails(id) {
 }
 
 function calculateRating(number) {
+    console.log("RATING", rating)
     switch (number) {
         case 1:
             return "&#9733;&#9734;&#9734;&#9734;&#9734;";
@@ -325,7 +358,7 @@ function googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
         .then(result => {
-            const user = result.user;
-            console.log("USER", user);
+            userCred = result.user;
+            console.log("USERCRED", userCred);
         })
 }
