@@ -200,6 +200,7 @@ function addBookToLibrary() {
                     haveRead: false,
                     rating: bookRating,
                     bookCover: newBook.bookCover,
+                    userID: userCred.uid
                 })
             }
 
@@ -329,7 +330,6 @@ function displayDetails(id) {
 }
 
 function calculateRating(number) {
-    console.log("RATING", rating)
     switch (number) {
         case 1:
             return "&#9733;&#9734;&#9734;&#9734;&#9734;";
@@ -360,5 +360,20 @@ function googleLogin() {
         .then(result => {
             userCred = result.user;
             console.log("USERCRED", userCred);
+            getLoggedInUserBooks(userCred.uid)
+        }).then()
+}
+
+function getLoggedInUserBooks(userID) {
+    console.log("IRED");
+
+    const db = firebase.firestore();
+    db.collection('users').doc(userID).collection('books').where('userID', '==', userID)
+        .get()
+        .then(userBooks => {
+            userBooks.forEach(book =>{
+                console.log(book.data());
+            })
         })
+
 }
