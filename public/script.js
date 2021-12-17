@@ -181,7 +181,7 @@ function addBookToLibrary() {
                 let bookRating;
                 newBook.rating === undefined ? bookRating = "No Rating" : bookRating = newBook.rating;
 
-                db.collection('users').doc(userCred.uid).collection('books').doc(newBook.title).set({
+                db.collection('users').doc(userCred.uid).collection('books').doc(newBook.id).set({
                     id: newBook.id,
                     title: newBook.title,
                     author: newBook.author,
@@ -250,8 +250,18 @@ function deleteBook() {
             for (prop in localStorage) {
                 if (JSON.parse(localStorage[prop]).id === icon.classList[0]) {
                     delete localStorage[prop];
-                    console.log("deleted");
                     library.splice(idx, 1);
+
+                    if (userCred) {
+                        const db = firebase.firestore();
+                        db.collection('users').doc(userCred.uid).collection('books').where('id', '==', icon.classList[0])
+                        .get()
+                        .then(results => {
+                            results.docs.forEach(doc => {
+                                doc.ref.delete();
+                            })
+                        })
+                    }
                     displayLibraryBooks();
                 }
             }
@@ -385,7 +395,7 @@ function localStorageToFirestore(userID) {
             let bookRating;
             bookObj.rating === undefined ? bookRating = "No Rating" : bookRating = newBook.rating;
     
-            db.collection('users').doc(userID).collection('books').doc(parsedObj.title).set({
+            db.collection('users').doc(userID).collection('books').doc(parsedObj.id).set({
                 id: parsedObj.id,
                 title: parsedObj.title,
                 author: parsedObj.author,
