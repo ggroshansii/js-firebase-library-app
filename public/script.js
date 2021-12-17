@@ -8,18 +8,12 @@
 
 
   document.addEventListener("DOMContentLoaded", e => {
-    console.log(firebase);
     const app = firebase.app();
 
-    // db = firebase.firestore();
-    // var docRef = db.collection("books");
-    // docRef.get().then(result => {
-    //     if (result) {
-    //         console.log("RESULTS", result);
-    //     } else {
-    //         console.error("error")
-    //     }
-    // })
+    Object.values(localStorage).forEach(storageItem => {
+        library.push(JSON.parse(storageItem));
+    })
+    displayLibraryBooks();
   })
 
 const searchBtn = document.querySelector(".search-btn");
@@ -184,11 +178,10 @@ function addBookToLibrary() {
             let db = firebase.firestore();
 
             if (userCred) {
-                console.log("FIRED");
                 let bookRating;
                 newBook.rating === undefined ? bookRating = "No Rating" : bookRating = newBook.rating;
 
-                db.collection('users').doc(userCred.uid).collection('books').doc(newBook.id).set({
+                db.collection('users').doc(userCred.uid).collection('books').doc(newBook.title).set({
                     id: newBook.id,
                     title: newBook.title,
                     author: newBook.author,
@@ -209,9 +202,9 @@ function addBookToLibrary() {
 function displayLibraryBooks() {
     let gridContainer = document.querySelector(".main-grid-container");
     gridContainer.innerHTML = "";
+
     library.forEach((bookObj, idx) => {
 
-        console.log(bookObj.id)
         const bookItemContainer = document.createElement("div");
         bookItemContainer.classList.add("book-item-container");
         bookItemContainer.setAttribute("id", `${bookObj.id}-container`);
@@ -364,7 +357,6 @@ function googleLogin() {
             getLoggedInUserBooks(userCred.uid);
 
             setTimeout(() => {
-                console.log(library);
                 displayLibraryBooks();
             },500);
         })
@@ -373,38 +365,40 @@ function googleLogin() {
 function localStorageToFirestore(userID) {
     const db = firebase.firestore();
 
-    Object.values(localStorage).forEach(bookObj => {
-        let parsedObj = JSON.parse(bookObj);
-
-        let bookRating;
-        bookObj.rating === undefined ? bookRating = "No Rating" : bookRating = newBook.rating;
-
-        db.collection('users').doc(userID).collection('books').doc(parsedObj.title).set({
-            id: parsedObj.id,
-            title: parsedObj.title,
-            author: parsedObj.author,
-            totalPages: parsedObj.totalPages,
-            readPages: null,
-            haveRead: false,
-            rating: bookRating,
-            bookCover: parsedObj.bookCover,
-            userID: userCred.uid
-         })
-    })
-
+    if (localStorage.length > 0) {
+        Object.values(localStorage).forEach(bookObj => {
+            let parsedObj = JSON.parse(bookObj);
+    
+            let bookRating;
+            bookObj.rating === undefined ? bookRating = "No Rating" : bookRating = newBook.rating;
+    
+            db.collection('users').doc(userID).collection('books').doc(parsedObj.title).set({
+                id: parsedObj.id,
+                title: parsedObj.title,
+                author: parsedObj.author,
+                totalPages: parsedObj.totalPages,
+                readPages: null,
+                haveRead: false,
+                rating: bookRating,
+                bookCover: parsedObj.bookCover,
+                userID: userCred.uid
+             })
+        })
+    }
 }
 
 function getLoggedInUserBooks(userID) {
     console.log("IRED");
     library = [];
+    localStorage.clear();
     const db = firebase.firestore();
     db.collection('users').doc(userID).collection('books').where('userID', '==', userID)
         .get()
-
         .then(userBooks => {
-            userBooks.forEach(book =>{
-  
+            userBooks.forEach((book, idx) =>{
                 library.push(book.data());
+                localStorage.setItem(localStorage.length, JSON.stringify(book.data()));
+                console.log(localStorage);
             })
         })
 }
