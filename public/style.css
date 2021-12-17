@@ -4,6 +4,8 @@
 .header-container {
     height: 15vh;
     position: relative;
+    border-bottom: 2px solid black;
+    background-color: lightgoldenrodyellow;
 }
 
 .header-main-heading {

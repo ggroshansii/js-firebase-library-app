@@ -243,12 +243,19 @@ function deleteBook() {
     const deleteIcon = document.querySelectorAll(".book-item-delete-btn");
     deleteIcon.forEach((icon, idx) => {
         icon.addEventListener("click", () => {
+            console.log(idx, icon);
             for (prop in localStorage) {
+                console.log(localStorage);
                 if (JSON.parse(localStorage[prop]).id === icon.classList[0]) {
                     delete localStorage[prop];
-                    displayLibraryBooks();
                 }
             }
+        
+            Object.values(localStorage).forEach(storageItem => {
+                library.push(JSON.parse(storageItem));
+            })
+            displayLibraryBooks();
+
         // const db = firebase.firestore();
         // db.collection('users').doc(userCred.id).collection('books').where('id', '==', icon.classList[0])
         //     .get()
@@ -358,7 +365,7 @@ function googleLogin() {
 
             setTimeout(() => {
                 displayLibraryBooks();
-            },500);
+            },800);
         })
 }
 
