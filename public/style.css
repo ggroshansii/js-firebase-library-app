@@ -40,7 +40,8 @@
 
 .search-books-collapse-btn {
     position: absolute;
-    bottom: 3px;
+    left: 5px;
+    top: 5px;
 }
 
 .modal-book-outer-container {
@@ -153,6 +154,6 @@
 
 .google-login-btn {
  position: absolute;
- right: 0px;
+ right: 5px;
  top: 5px;
 }
