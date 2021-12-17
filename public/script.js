@@ -10,17 +10,16 @@
   document.addEventListener("DOMContentLoaded", e => {
     console.log(firebase);
     const app = firebase.app();
-    console.log('hey', app);
 
-    db = firebase.firestore();
-    var docRef = db.collection("books");
-    docRef.get().then(result => {
-        if (result) {
-            console.log("RESULTS", result);
-        } else {
-            console.error("error")
-        }
-    })
+    // db = firebase.firestore();
+    // var docRef = db.collection("books");
+    // docRef.get().then(result => {
+    //     if (result) {
+    //         console.log("RESULTS", result);
+    //     } else {
+    //         console.error("error")
+    //     }
+    // })
   })
 
 const searchBtn = document.querySelector(".search-btn");
@@ -58,6 +57,7 @@ function Book(id, title, author, totalPages, rating, bookCover) {
 }
 
 displayLibraryBooks();
+// localStorage.clear();
 console.log(localStorage);
 
 searchBtn.addEventListener("click", (e) => {
@@ -88,9 +88,6 @@ async function queryBooks() {
     searchData.subject
         ? (searchSubject = `+insubject:${searchData.subject}`)
         : (searchSubject = "");
-
-    console.log(searchData.title, searchData.author, searchData.subject);
-    console.log(searchTitle, searchAuthor, searchSubject);
 
     const options = {
         method: "GET",
@@ -360,8 +357,33 @@ function googleLogin() {
         .then(result => {
             userCred = result.user;
             console.log("USERCRED", userCred);
-            getLoggedInUserBooks(userCred.uid)
+            localStorageToFirestore(userCred.uid);
+            getLoggedInUserBooks(userCred.uid);
         }).then()
+}
+
+function localStorageToFirestore(userID) {
+    const db = firebase.firestore();
+
+    Object.values(localStorage).forEach(bookObj => {
+        let parsedObj = JSON.parse(bookObj);
+
+        let bookRating;
+        bookObj.rating === undefined ? bookRating = "No Rating" : bookRating = newBook.rating;
+
+        db.collection('users').doc(userID).collection('books').doc(parsedObj.title).set({
+            id: parsedObj.id,
+            title: parsedObj.title,
+            author: parsedObj.author,
+            totalPages: parsedObj.totalPages,
+            readPages: null,
+            haveRead: false,
+            rating: bookRating,
+            bookCover: parsedObj.bookCover,
+            userID: userCred.uid
+         })
+    })
+
 }
 
 function getLoggedInUserBooks(userID) {
