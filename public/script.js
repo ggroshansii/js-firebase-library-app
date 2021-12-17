@@ -37,7 +37,7 @@ let searchData = {
 };
 let searchResults = null;
 let library = [];
-let userCred;
+let userAuth;
 
 function Book(id, title, author, totalPages, rating, bookCover) {
     this.id = id;
@@ -177,11 +177,11 @@ function addBookToLibrary() {
 
             let db = firebase.firestore();
 
-            if (userCred) {
+            if (userAuth) {
                 let bookRating;
                 newBook.rating === undefined ? bookRating = "No Rating" : bookRating = newBook.rating;
 
-                db.collection('users').doc(userCred.uid).collection('books').doc(newBook.id).set({
+                db.collection('users').doc(userAuth.uid).collection('books').doc(newBook.id).set({
                     id: newBook.id,
                     title: newBook.title,
                     author: newBook.author,
@@ -190,7 +190,7 @@ function addBookToLibrary() {
                     haveRead: false,
                     rating: bookRating,
                     bookCover: newBook.bookCover,
-                    userID: userCred.uid
+                    userID: userAuth.uid
                 })
             }
 
@@ -221,7 +221,7 @@ function displayLibraryBooks() {
         const readStatusBtn = document.createElement("button");
         readStatusBtn.value = idx;
         if (bookObj.haveRead === false) {
-            readStatusBtn.classList.add("status-btn", "status-not-read");
+            readStatusBtn.classList.add(`${bookObj.id}`,"status-btn", "status-not-read");
             readStatusBtn.textContent = "Not Read";
         } else {
             readStatusBtn.classList.add("status-btn", "status-read");
@@ -243,18 +243,15 @@ function deleteBook() {
     const deleteIcon = document.querySelectorAll(".book-item-delete-btn");
     deleteIcon.forEach((icon, idx) => {
         icon.addEventListener("click", () => {
-            console.log(idx, icon);
-            console.log(localStorage);
-
 
             for (prop in localStorage) {
                 if (JSON.parse(localStorage[prop]).id === icon.classList[0]) {
                     delete localStorage[prop];
                     library.splice(idx, 1);
 
-                    if (userCred) {
+                    if (userAuth) {
                         const db = firebase.firestore();
-                        db.collection('users').doc(userCred.uid).collection('books').where('id', '==', icon.classList[0])
+                        db.collection('users').doc(userAuth.uid).collection('books').where('id', '==', icon.classList[0])
                         .get()
                         .then(results => {
                             results.docs.forEach(doc => {
@@ -265,19 +262,6 @@ function deleteBook() {
                     displayLibraryBooks();
                 }
             }
-        
-
-            // Object.values(localStorage).forEach(storageItem => {
-            //     library.push(JSON.parse(storageItem));
-            // })
-            // displayLibraryBooks();
-
-        // const db = firebase.firestore();
-        // db.collection('users').doc(userCred.id).collection('books').where('id', '==', icon.classList[0])
-        //     .get()
-        //     .then(book => {
-        //         console.log(book);
-            // })
         });
     });
 }
@@ -291,13 +275,27 @@ function toggleStatusBtn() {
             if (btn.classList.contains("status-read")) {
                 btn.textContent = "Read";
                 library[btn.value].haveRead = true;
+
+                
+                // for (prop in localStorage) {
+                //     if (JSON.parse(localStorage[prop]).id === icon.classList[0]) {
+                //         delete localStorage[prop];
+                //         library.splice(idx, 1);
+                //     }
+                // }
+
             } else {
                 btn.textContent = "Not Read";
                 library[btn.value].haveRead = false;
+
+
             }
+        
         });
     });
 }
+
+
 
 function hideBookCover(id) {
     const bookLowerDiv = document.getElementById(`${id}-lower-div`);
@@ -374,10 +372,10 @@ function googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
         .then(result => {
-            userCred = result.user;
-            console.log("USERCRED", userCred);
-            localStorageToFirestore(userCred.uid);
-            getLoggedInUserBooks(userCred.uid);
+            userAuth = result.user;
+            console.log("userAuth", userAuth);
+            localStorageToFirestore(userAuth.uid);
+            getLoggedInUserBooks(userAuth.uid);
 
             setTimeout(() => {
                 displayLibraryBooks();
@@ -404,7 +402,7 @@ function localStorageToFirestore(userID) {
                 haveRead: false,
                 rating: bookRating,
                 bookCover: parsedObj.bookCover,
-                userID: userCred.uid
+                userID: userAuth.uid
              })
         })
     }
