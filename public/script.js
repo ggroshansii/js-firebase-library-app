@@ -202,7 +202,6 @@ function addBookToLibrary() {
             }
 
             displayLibraryBooks();
-            console.log(library);
         });
     });
 }
@@ -210,8 +209,7 @@ function addBookToLibrary() {
 function displayLibraryBooks() {
     let gridContainer = document.querySelector(".main-grid-container");
     gridContainer.innerHTML = "";
-    Object.values(localStorage).forEach((bookObj, idx) => {
-        bookObj = JSON.parse(bookObj);
+    library.forEach((bookObj, idx) => {
 
         console.log(bookObj.id)
         const bookItemContainer = document.createElement("div");
@@ -258,7 +256,12 @@ function deleteBook() {
                     displayLibraryBooks();
                 }
             }
-
+        // const db = firebase.firestore();
+        // db.collection('users').doc(userCred.id).collection('books').where('id', '==', icon.classList[0])
+        //     .get()
+        //     .then(book => {
+        //         console.log(book);
+            // })
         });
     });
 }
@@ -359,7 +362,12 @@ function googleLogin() {
             console.log("USERCRED", userCred);
             localStorageToFirestore(userCred.uid);
             getLoggedInUserBooks(userCred.uid);
-        }).then()
+
+            setTimeout(() => {
+                console.log(library);
+                displayLibraryBooks();
+            },500);
+        })
 }
 
 function localStorageToFirestore(userID) {
@@ -388,14 +396,15 @@ function localStorageToFirestore(userID) {
 
 function getLoggedInUserBooks(userID) {
     console.log("IRED");
-
+    library = [];
     const db = firebase.firestore();
     db.collection('users').doc(userID).collection('books').where('userID', '==', userID)
         .get()
+
         .then(userBooks => {
             userBooks.forEach(book =>{
-                console.log(book.data());
+  
+                library.push(book.data());
             })
         })
-
 }
