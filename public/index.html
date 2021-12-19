@@ -64,31 +64,34 @@
     <body>
         <div class="max-width-container">
             <header class="header-container">
-
                 <div class="main-heading-container">
                     <h1 class="header-main-heading">Library</h1>
-                    <img class="logo-image" src="./images/open-book.png" alt="">
+                    <img
+                        class="logo-image"
+                        src="./images/open-book.png"
+                        alt=""
+                    />
                 </div>
 
                 <nav>
                     <button
-                    class="btn btn-primary search-books-collapse-btn"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseForm"
-                    aria-expanded="false"
-                    aria-controls="collapseForm"
-                >
-                    Search
-                </button>
-                <button
-                    class="btn btn-primary google-login-btn"
-                    onclick="googleLogin()"
-                >
-                    Login
-                </button>
+                        class="btn btn-primary search-books-collapse-btn"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseForm"
+                        aria-expanded="false"
+                        aria-controls="collapseForm"
+                    >
+                        Search
+                    </button>
+                    <button
+                        class="btn btn-primary google-login-btn"
+                        onclick="googleLogin()"
+                    >
+                        Login
+                    </button>
                 </nav>
-                
+
                 <form
                     class="form-container form-control collapse"
                     action=""
@@ -96,51 +99,59 @@
                 >
                     <div class="form-group">
                         <label for="book-title" class="">Title:</label>
-                        <input type="text" id="book-title" class="form-control book-form-input" />
+                        <input
+                            type="text"
+                            id="book-title"
+                            class="form-control book-form-input"
+                        />
                     </div>
                     <div class="form-group">
                         <label for="book-author" class="">Author:</label>
-                        <input type="text" id="book-author" class="form-control book-form-input" />
+                        <input
+                            type="text"
+                            id="book-author"
+                            class="form-control book-form-input"
+                        />
                     </div>
                     <div class="form-group">
                         <label for="book-subject" class="">Subject:</label>
-                        <input type="text" id="book-subject" class="form-control book-form-input" />
+                        <input
+                            type="text"
+                            id="book-subject"
+                            class="form-control book-form-input"
+                        />
                     </div>
 
-
-
-                    <button class="search-btn btn btn-primary mt-3" type="submit">
+                    <button
+                        class="search-btn btn btn-primary mt-3"
+                        type="submit"
+                    >
                         Search
                     </button>
                 </form>
             </header>
             <div class="description-outer-container">
                 <div class="description-inner-container">
-                    Welcome to the Library Web App. Use the left-side button, 'Search', to query & retrieve books using the Google Book API with
-                    criteria such as Title, Author or Subject. When you want to add a
-                    book to your collection, click the 'Add' button associated with the
-                    book in the search results modal. The book will then appear in a CSS
-                    Grid Container on the main section of the page. If you want to
-                    indefinitely store your book collection, click the right-side
-                    button, 'Login', to sign into your Google Account, which will store
-                    the books into a Firebase Database. The Firebase Database,
-                    Firestore, will be unique to your user id when you login.
+                    Welcome to the Library Web App. Use the left-side button,
+                    'Search', to query & retrieve books using the Google Book
+                    API with criteria such as Title, Author or Subject. When you
+                    want to add a book to your collection, click the 'Add'
+                    button associated with the book in the search results modal.
+                    The book will then appear in a CSS Grid Container on the
+                    main section of the page. If you want to indefinitely store
+                    your book collection, click the right-side button, 'Login',
+                    to sign into your Google Account, which will store the books
+                    into a Firebase Database. The Firebase Database, Firestore,
+                    will be unique to your user id when you login.
                 </div>
-    
             </div>
             <div class="primary-content-flex-container">
                 <main class="main-container">
                     <div class="main-grid-container"></div>
                 </main>
             </div>
-    
-            <div
-                class="modal fade"
-                id="bookModal"
-                tabindex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-            >
+
+            <div class="modal fade" id="bookModal" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -159,15 +170,33 @@
                     </div>
                 </div>
             </div>
-    
+
+            <div class="modal fade" id="readPagesModal" tabindex="-1">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">
+                                How many pages have you read?
+                            </h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body"></div>
+                        <div class="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+
             <script
                 src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
                 crossorigin="anonymous"
             ></script>
             <script src="script.js"></script>
-
         </div>
-       
     </body>
 </html>

@@ -320,8 +320,6 @@ function toggleStatusBtn() {
                         }
                     }
                 }
-
-
             });
 
         });
@@ -441,7 +439,6 @@ function localStorageToFirestore(userID) {
 }
 
 function getLoggedInUserBooks(userID) {
-    console.log("IRED");
     library = [];
     localStorage.clear();
     const db = firebase.firestore();
