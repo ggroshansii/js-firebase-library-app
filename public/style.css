@@ -24,12 +24,16 @@ body {
     background-color: #809BCE;
 }
 
+.main-heading-container {
+    display: flex;
+    margin: auto;
+}
+
 .header-main-heading {
     font-family: 'Lobster', cursive;
-    width: 100%;
     text-align: center;
     font-size: 5rem;
-    color: #F2F8F4;
+    color: black;
 }
 
 .form-container {
@@ -215,4 +219,11 @@ nav {
     border: 1px solid black;
     border-radius: 1rem;
     
+}
+
+.logo-image {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    width: 75px;
+    height: 75px;
 }
