@@ -224,7 +224,7 @@ function displayLibraryBooks() {
             readStatusBtn.classList.add(`${bookObj.id}`,"status-btn", "status-not-read");
             readStatusBtn.textContent = "Not Read";
         } else {
-            readStatusBtn.classList.add("status-btn", "status-read");
+            readStatusBtn.classList.add(`${bookObj.id}`, "status-btn", "status-read");
             readStatusBtn.textContent = "Read";
         }
         bookButtonContainer.append(readStatusBtn);
@@ -270,11 +270,12 @@ function toggleStatusBtn() {
     const statusBtn = document.querySelectorAll(".status-btn");
     statusBtn.forEach((btn, idx) => {
         btn.addEventListener("click", () => {
+            console.log("STOR", localStorage, btn.classList);
                 for (prop in localStorage) {
                     if (JSON.parse(localStorage[prop]).id === btn.classList[0]) {
-                        console.log(JSON.parse(localStorage[prop]))
+                        console.log(JSON.parse(localStorage[prop]).haveRead);
 
-                        if (btn.classList.contains("status-read")) {
+                        if (JSON.parse(localStorage[prop]).haveRead == true) {
                             console.log(btn, "status-read")
                             let updatedStorageItem = JSON.parse(localStorage[prop]);
                             updatedStorageItem.haveRead = false;
