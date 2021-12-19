@@ -10,38 +10,86 @@
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous"
         />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+            integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+            crossorigin="anonymous"
+        />
         <link rel="stylesheet" href="style.css" />
         <title>Library</title>
 
-            <!-- update the version number as needed -->
-    <script defer src="/__/firebase/9.6.1/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/9.6.1/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/9.6.1/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/9.6.1/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/9.6.1/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/9.6.1/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/9.6.1/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/9.6.1/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/9.6.1/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/9.6.1/firebase-performance-compat.js"></script>
-    <!-- 
+        <!-- update the version number as needed -->
+        <script defer src="/__/firebase/9.6.1/firebase-app-compat.js"></script>
+        <!-- include only the Firebase features as you need -->
+        <script defer src="/__/firebase/9.6.1/firebase-auth-compat.js"></script>
+        <script
+            defer
+            src="/__/firebase/9.6.1/firebase-database-compat.js"
+        ></script>
+        <script
+            defer
+            src="/__/firebase/9.6.1/firebase-firestore-compat.js"
+        ></script>
+        <script
+            defer
+            src="/__/firebase/9.6.1/firebase-functions-compat.js"
+        ></script>
+        <script
+            defer
+            src="/__/firebase/9.6.1/firebase-messaging-compat.js"
+        ></script>
+        <script
+            defer
+            src="/__/firebase/9.6.1/firebase-storage-compat.js"
+        ></script>
+        <script
+            defer
+            src="/__/firebase/9.6.1/firebase-analytics-compat.js"
+        ></script>
+        <script
+            defer
+            src="/__/firebase/9.6.1/firebase-remote-config-compat.js"
+        ></script>
+        <script
+            defer
+            src="/__/firebase/9.6.1/firebase-performance-compat.js"
+        ></script>
+        <!-- 
       initialize the SDK after all desired features are loaded, set useEmulator to false
       to avoid connecting the SDK to running emulators.
     -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+        <script defer src="/__/firebase/init.js?useEmulator=true"></script>
     </head>
     <body>
         <header class="header-container">
+
+
             <h1 class="header-main-heading">Library</h1>
-            <button class="btn btn-primary google-login-btn" onclick="googleLogin()">Login</button>
-            <p>
-                <button class="btn btn-success search-books-collapse-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
-                    Search For Books
-                  </button>
-            </p>
-            <form class="form-container form-control collapse" action="" id="collapseForm">
+            <nav>
+                <button
+                class="btn btn-success search-books-collapse-btn"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseForm"
+                aria-expanded="false"
+                aria-controls="collapseForm"
+            >
+                Search
+            </button>
+            <button
+                class="btn btn-primary google-login-btn"
+                onclick="googleLogin()"
+            >
+                Login
+            </button>
+            </nav>
+            
+            <form
+                class="form-container form-control collapse"
+                action=""
+                id="collapseForm"
+            >
                 <label for="book-title" class="mt-2 mb-1">Title</label>
                 <input type="text" id="book-title" class="form-control" />
                 <label for="book-author" class="mt-2 mb-1">Author</label>
@@ -52,14 +100,21 @@
                     Search
                 </button>
             </form>
-            
         </header>
-        <div class="description">Welcome to the Library Web App. Use the left-side button, 'Search For Books', to query & retrieve books using the Google Book API with criteria such as Title, Author or Subject. When you want to add a book to your collection, click the 'Add' button associated with the book in the search results modal. The book will then appear in a CSS Grid Container on the main section of the page. If you want to indefinitely store your book collection, click the right-side button, 'Login', to sign into your Google Account, which will store the books into a Firebase Database. The Firebase Database, Firestore, will be unique to your user id when you login. </div>
+        <div class="description">
+            Welcome to the Library Web App. Use the left-side button, 'Search', to query & retrieve books using the Google Book API with
+            criteria such as Title, Author or Subject. When you want to add a
+            book to your collection, click the 'Add' button associated with the
+            book in the search results modal. The book will then appear in a CSS
+            Grid Container on the main section of the page. If you want to
+            indefinitely store your book collection, click the right-side
+            button, 'Login', to sign into your Google Account, which will store
+            the books into a Firebase Database. The Firebase Database,
+            Firestore, will be unique to your user id when you login.
+        </div>
         <div class="primary-content-flex-container">
             <main class="main-container">
-                <div class="main-grid-container">
-
-                </div>
+                <div class="main-grid-container"></div>
             </main>
         </div>
 
@@ -84,8 +139,7 @@
                         ></button>
                     </div>
                     <div class="modal-body"></div>
-                    <div class="modal-footer">
-                    </div>
+                    <div class="modal-footer"></div>
                 </div>
             </div>
         </div>
