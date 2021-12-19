@@ -39,8 +39,11 @@ body {
 .form-container {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
     z-index: 1;
     margin-top: 1rem;
+    background-color: #F2F8F4;
+
 }
 
 .main-container {
@@ -104,14 +107,7 @@ body {
     position: relative;
     border-radius: 10px;
     transition: all 2s;
-
 }
-
-/* .book-cover-container:hover {
-    background-image:none !important;
-    background-color: white;
-    cursor: pointer;
-} */
 
 .book-lower-div {
     height: 220px;
@@ -173,9 +169,6 @@ nav {
 }
 
 .google-login-btn {
- /* position: absolute;
- right: 10px;
- top: 10px; */
  height: 40px;
  width: 125px;
  margin-left: 0.25rem;
@@ -188,9 +181,6 @@ nav {
 }
 
 .search-books-collapse-btn {
-    /* position: absolute;
-    left: 10px;
-    top: 10px; */
     height: 40px;
     width: 125px;
     margin-right: 0.25rem;
@@ -229,3 +219,20 @@ nav {
 .modal-lg {
     width: 600px;
 }
+
+.book-form-input {
+    height: 35px;
+    width: 100%;
+}
+
+.search-btn {
+    height: 40px;
+    width: 125px;
+    margin-left: 0.25rem;
+    background-color: #DFA5BF;
+    border: none;
+   }
+   
+   .search-btn:hover {
+       background-color: #D996B4;
+   }
