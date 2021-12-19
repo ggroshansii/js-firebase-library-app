@@ -26,6 +26,8 @@ const searchForm = document.querySelector("#collapseForm");
 const searchModal = new bootstrap.Modal(document.getElementById("bookModal")); //activates content as a modal
 const mySearchModal = document.getElementById("bookModal"); //modal itself
 
+const readPagesModal = new bootstrap.Modal(document.getElementById("readPagesModal"));
+
 const modalBody = document.querySelector(".modal-body");
 const modalCloseBtn = document.querySelector(".btn-close");
 
@@ -240,13 +242,14 @@ function displayLibraryBooks() {
     });
     deleteBook();
     toggleStatusBtn();
+    readPagesEvent();
 }
 
 function deleteBook() {
     const deleteIcon = document.querySelectorAll(".book-item-delete-btn");
     deleteIcon.forEach((icon, idx) => {
-        icon.addEventListener("click", () => {
-
+        icon.addEventListener("click", (e) => {
+            e.stopPropagation();
             for (prop in localStorage) {
                 if (JSON.parse(localStorage[prop]).id === icon.classList[0]) {
                     delete localStorage[prop];
@@ -272,7 +275,8 @@ function deleteBook() {
 function toggleStatusBtn() {
     const statusBtn = document.querySelectorAll(".status-btn");
     statusBtn.forEach((btn, idx) => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
             console.log("STOR", localStorage, btn.classList);
                 for (prop in localStorage) {
                     if (JSON.parse(localStorage[prop]).id === btn.classList[0]) {
@@ -451,4 +455,18 @@ function getLoggedInUserBooks(userID) {
                 console.log(localStorage);
             })
         })
+}
+
+function readPagesEvent() {
+    const bookItems = document.querySelectorAll('.book-item-container');
+    bookItems.forEach(bookItem => {
+        bookItem.addEventListener('click', (e) => {
+            let bookID = e.target.id.split('-')[0];
+            readPagesModal.toggle();
+
+            let input = document.createElement('input');
+            let submitBtn = document.createElement('button');
+
+        })
+    })
 }
