@@ -273,7 +273,7 @@ function toggleStatusBtn() {
             console.log("STOR", localStorage, btn.classList);
                 for (prop in localStorage) {
                     if (JSON.parse(localStorage[prop]).id === btn.classList[0]) {
-                        console.log(JSON.parse(localStorage[prop]).haveRead);
+                        let db = firebase.firestore();
 
                         if (JSON.parse(localStorage[prop]).haveRead == true) {
                             console.log(btn, "status-read")
@@ -283,6 +283,11 @@ function toggleStatusBtn() {
                             btn.textContent = "Not Read";
                             library[btn.value].haveRead = false;
 
+                            if (userAuth) {
+                                db.collection("users").doc(userAuth.uid).collection("books").doc(btn.classList[0]).update({haveRead: false});
+                            }
+
+
                         } else {
                             console.log(btn, "status-not-read")
                             let updatedStorageItem = JSON.parse(localStorage[prop]);
@@ -290,7 +295,10 @@ function toggleStatusBtn() {
                             localStorage.setItem(prop, JSON.stringify(updatedStorageItem));
                             btn.textContent = "Read";
                             library[btn.value].haveRead = true;
-         
+                            
+                            if (userAuth) {
+                                db.collection("users").doc(userAuth.uid).collection("books").doc(btn.classList[0]).update({haveRead: true});
+                            }
 
                         }
                         btn.classList.toggle("status-read");
@@ -408,7 +416,7 @@ function localStorageToFirestore(userID) {
                 author: parsedObj.author,
                 totalPages: parsedObj.totalPages,
                 readPages: null,
-                haveRead: false,
+                haveRead: parsedObj.haveRead,
                 rating: bookRating,
                 bookCover: parsedObj.bookCover,
                 userID: userAuth.uid
