@@ -225,3 +225,7 @@ nav {
     width: 75px;
     height: 75px;
 }
+
+.modal-lg {
+    width: 600px;
+}
