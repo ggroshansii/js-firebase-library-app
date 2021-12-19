@@ -38,11 +38,9 @@ body {
 
 .form-container {
     display: flex;
-    flex-direction: column;
-    width: 250px;
-    position: absolute;
-    top: 15vh;
-    z-index: 3;
+    flex-direction: row;
+    padding: 1.5rem 1rem;
+    z-index: 1;
 }
 
 .main-container {
@@ -54,7 +52,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     justify-content: center;
     align-content: flex-start;
-    height: 85vh;
+    min-height: 85vh;
     padding: 2rem;
     gap: 1.5rem;
     background-color: #D6EADF;
