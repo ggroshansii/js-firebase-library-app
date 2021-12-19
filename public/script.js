@@ -223,9 +223,12 @@ function displayLibraryBooks() {
         if (bookObj.haveRead === "not-read") {
             readStatusBtn.classList.add(`${bookObj.id}`,"status-btn", "status-not-read");
             readStatusBtn.textContent = "Not Read";
-        } else {
+        } else if (bookObj.haveRead === "read"){
             readStatusBtn.classList.add(`${bookObj.id}`, "status-btn", "status-read");
             readStatusBtn.textContent = "Read";
+        } else {
+            readStatusBtn.classList.add(`${bookObj.id}`, "status-btn", "status-in-progress");
+            readStatusBtn.textContent = "In Progress";
         }
         bookButtonContainer.append(readStatusBtn);
         bookButtonContainer.classList.add("book-btn-container");
@@ -276,7 +279,6 @@ function toggleStatusBtn() {
                         let db = firebase.firestore();
 
                         if (JSON.parse(localStorage[prop]).haveRead == 'read') {
-                            console.log(btn, "status-read")
                             let updatedStorageItem = JSON.parse(localStorage[prop]);
                             updatedStorageItem.haveRead = 'not-read';
                             localStorage.setItem(prop, JSON.stringify(updatedStorageItem));
@@ -286,10 +288,23 @@ function toggleStatusBtn() {
                             if (userAuth) {
                                 db.collection("users").doc(userAuth.uid).collection("books").doc(btn.classList[0]).update({haveRead: 'not-read'});
                             }
-
+                            btn.classList.toggle("status-read");
+                            btn.classList.toggle("status-not-read");
 
                         } else if (JSON.parse(localStorage[prop]).haveRead == 'not-read'){
-                            console.log(btn, "status-not-read")
+                            let updatedStorageItem = JSON.parse(localStorage[prop]);
+                            updatedStorageItem.haveRead = 'in-progress';
+                            localStorage.setItem(prop, JSON.stringify(updatedStorageItem));
+                            btn.textContent = "In Progress";
+                            library[btn.value].haveRead = 'in-progress';
+                            
+                            if (userAuth) {
+                                db.collection("users").doc(userAuth.uid).collection("books").doc(btn.classList[0]).update({haveRead: 'in-progress'});
+                            }
+                            btn.classList.toggle("status-not-read");
+                            btn.classList.toggle("status-in-progress");
+
+                        } else {
                             let updatedStorageItem = JSON.parse(localStorage[prop]);
                             updatedStorageItem.haveRead = 'read';
                             localStorage.setItem(prop, JSON.stringify(updatedStorageItem));
@@ -300,9 +315,9 @@ function toggleStatusBtn() {
                                 db.collection("users").doc(userAuth.uid).collection("books").doc(btn.classList[0]).update({haveRead: 'read'});
                             }
 
+                            btn.classList.toggle("status-read");
+                            btn.classList.toggle("status-in-progress");
                         }
-                        btn.classList.toggle("status-read");
-                        btn.classList.toggle("status-not-read");
                     }
                 }
 

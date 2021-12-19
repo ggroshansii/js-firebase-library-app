@@ -136,6 +136,7 @@ body {
 
 .status-btn {
     border-top-left-radius: 8px;
+    border-bottom-right-radius:8px;
     border: none;
     padding: 0.25rem 0.5rem;
 }
@@ -147,6 +148,10 @@ body {
 
 .status-read {
     background-color: lightgreen;
+}
+
+.status-in-progress {
+    background-color: purple;
 }
 
 .hide {
