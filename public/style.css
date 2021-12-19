@@ -1,6 +1,19 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
+body {
+
+    background-color: floralwhite;
+
+}
+
+.max-width-container {
+    max-width: 1100px;
+    margin: auto;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
 .header-container {
     display: flex;
     flex-direction: column;
@@ -8,7 +21,7 @@
     height: 20vh;
     position: relative;
     border-bottom: 1px solid black;
-    background-color: lightgoldenrodyellow;
+    background-color: #809BCE;
 }
 
 .header-main-heading {
@@ -16,6 +29,7 @@
     width: 100%;
     text-align: center;
     font-size: 5rem;
+    color: #F2F8F4;
 }
 
 .form-container {
@@ -39,7 +53,7 @@
     height: 85vh;
     padding: 2rem;
     gap: 1.5rem;
-    background-color: floralwhite;
+    background-color: #D6EADF;
 }
 
 
@@ -163,6 +177,12 @@ nav {
  height: 40px;
  width: 125px;
  margin-left: 0.25rem;
+ background-color: #DFA5BF;
+ border: none;
+}
+
+.google-login-btn:hover {
+    background-color: #D996B4;
 }
 
 .search-books-collapse-btn {
@@ -172,13 +192,27 @@ nav {
     height: 40px;
     width: 125px;
     margin-right: 0.25rem;
+    background-color: #DFA5BF;
+    border: none;
 }
 
-.description {
-    width: 80vw;
-    margin: 2rem auto;
-    padding: 1rem;
-    background-color: bisque;
-    border-radius: 1rem;
+.search-books-collapse-btn:hover {
+    background-color: #D996B4;
+}
 
+.description-outer-container {
+    max-width: 1200px;
+    background-color: #D6EADF;
+    padding: 2rem 0rem;
+}
+
+.description-inner-container {
+    width: 80vw;
+    max-width: 1000px;
+    margin: auto;
+    padding: 1rem;
+    background-color: #F2F8F4;
+    border: 1px solid black;
+    border-radius: 1rem;
+    
 }
