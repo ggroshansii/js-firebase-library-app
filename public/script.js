@@ -136,7 +136,7 @@ function displaySearchResultsModal() {
             bookDescBtnContainer.classList.add("modal-book-desc-btn-container");
             let bookDescDiv = document.createElement("div");
             let bookDescription = document.createElement("p");
-            bookDescription.textContent = item.volumeInfo.description;
+            bookDescription.textContent = item.volumeInfo.description.substring(0,450) + "...";
             bookDescDiv.append(bookDescription);
             bookDescBtnContainer.append(bookDescDiv);
             let bookBtnDiv = document.createElement("div");
