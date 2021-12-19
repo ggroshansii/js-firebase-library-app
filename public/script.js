@@ -45,7 +45,7 @@ function Book(id, title, author, totalPages, rating, bookCover) {
     this.author = author;
     this.totalPages = totalPages;
     this.readPages = null;
-    this.haveRead = false;
+    this.haveRead = "not-read";
     this.rating = rating;
     this.bookCover = bookCover;
 }
@@ -187,7 +187,7 @@ function addBookToLibrary() {
                     author: newBook.author,
                     totalPages: newBook.totalPages,
                     readPages: null,
-                    haveRead: false,
+                    haveRead: 'not-read',
                     rating: bookRating,
                     bookCover: newBook.bookCover,
                     userID: userAuth.uid
@@ -220,7 +220,7 @@ function displayLibraryBooks() {
             `<i class="${bookObj.id} fas fa-times book-item-delete-btn "></i>`;
         const readStatusBtn = document.createElement("button");
         readStatusBtn.value = idx;
-        if (bookObj.haveRead === false) {
+        if (bookObj.haveRead === "not-read") {
             readStatusBtn.classList.add(`${bookObj.id}`,"status-btn", "status-not-read");
             readStatusBtn.textContent = "Not Read";
         } else {
@@ -275,29 +275,29 @@ function toggleStatusBtn() {
                     if (JSON.parse(localStorage[prop]).id === btn.classList[0]) {
                         let db = firebase.firestore();
 
-                        if (JSON.parse(localStorage[prop]).haveRead == true) {
+                        if (JSON.parse(localStorage[prop]).haveRead == 'read') {
                             console.log(btn, "status-read")
                             let updatedStorageItem = JSON.parse(localStorage[prop]);
-                            updatedStorageItem.haveRead = false;
+                            updatedStorageItem.haveRead = 'not-read';
                             localStorage.setItem(prop, JSON.stringify(updatedStorageItem));
                             btn.textContent = "Not Read";
-                            library[btn.value].haveRead = false;
+                            library[btn.value].haveRead = 'not-read';
 
                             if (userAuth) {
-                                db.collection("users").doc(userAuth.uid).collection("books").doc(btn.classList[0]).update({haveRead: false});
+                                db.collection("users").doc(userAuth.uid).collection("books").doc(btn.classList[0]).update({haveRead: 'not-read'});
                             }
 
 
-                        } else {
+                        } else if (JSON.parse(localStorage[prop]).haveRead == 'not-read'){
                             console.log(btn, "status-not-read")
                             let updatedStorageItem = JSON.parse(localStorage[prop]);
-                            updatedStorageItem.haveRead = true;
+                            updatedStorageItem.haveRead = 'read';
                             localStorage.setItem(prop, JSON.stringify(updatedStorageItem));
                             btn.textContent = "Read";
-                            library[btn.value].haveRead = true;
+                            library[btn.value].haveRead = 'read';
                             
                             if (userAuth) {
-                                db.collection("users").doc(userAuth.uid).collection("books").doc(btn.classList[0]).update({haveRead: true});
+                                db.collection("users").doc(userAuth.uid).collection("books").doc(btn.classList[0]).update({haveRead: 'read'});
                             }
 
                         }
