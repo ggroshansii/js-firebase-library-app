@@ -268,32 +268,40 @@ function deleteBook() {
 
 function toggleStatusBtn() {
     const statusBtn = document.querySelectorAll(".status-btn");
-    statusBtn.forEach((btn) => {
+    statusBtn.forEach((btn, idx) => {
         btn.addEventListener("click", () => {
-            btn.classList.toggle("status-read");
-            btn.classList.toggle("status-not-read");
-            if (btn.classList.contains("status-read")) {
-                btn.textContent = "Read";
-                library[btn.value].haveRead = true;
+                for (prop in localStorage) {
+                    if (JSON.parse(localStorage[prop]).id === btn.classList[0]) {
+                        console.log(JSON.parse(localStorage[prop]))
 
-                
-                // for (prop in localStorage) {
-                //     if (JSON.parse(localStorage[prop]).id === icon.classList[0]) {
-                //         delete localStorage[prop];
-                //         library.splice(idx, 1);
-                //     }
-                // }
+                        if (btn.classList.contains("status-read")) {
+                            console.log(btn, "status-read")
+                            let updatedStorageItem = JSON.parse(localStorage[prop]);
+                            updatedStorageItem.haveRead = false;
+                            localStorage.setItem(prop, JSON.stringify(updatedStorageItem));
+                            btn.textContent = "Not Read";
+                            library[btn.value].haveRead = false;
 
-            } else {
-                btn.textContent = "Not Read";
-                library[btn.value].haveRead = false;
+                        } else {
+                            console.log(btn, "status-not-read")
+                            let updatedStorageItem = JSON.parse(localStorage[prop]);
+                            updatedStorageItem.haveRead = true;
+                            localStorage.setItem(prop, JSON.stringify(updatedStorageItem));
+                            btn.textContent = "Read";
+                            library[btn.value].haveRead = true;
+         
+
+                        }
+                        btn.classList.toggle("status-read");
+                        btn.classList.toggle("status-not-read");
+                    }
+                }
 
 
-            }
-        
+            });
+
         });
-    });
-}
+    }
 
 
 
