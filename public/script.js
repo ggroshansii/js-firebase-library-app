@@ -6,15 +6,14 @@
 // Local storage saving
 // Save to firebase option (Sign In button)
 
-
-  document.addEventListener("DOMContentLoaded", e => {
+document.addEventListener("DOMContentLoaded", (e) => {
     const app = firebase.app();
 
-    Object.values(localStorage).forEach(storageItem => {
+    Object.values(localStorage).forEach((storageItem) => {
         library.push(JSON.parse(storageItem));
-    })
+    });
     displayLibraryBooks();
-  })
+});
 
 const searchBtn = document.querySelector(".search-btn");
 const titleInput = document.querySelector("#book-title");
@@ -26,11 +25,12 @@ const searchForm = document.querySelector("#collapseForm");
 const searchModal = new bootstrap.Modal(document.getElementById("bookModal")); //activates content as a modal
 const mySearchModal = document.getElementById("bookModal"); //modal itself
 
-const readPagesModal = new bootstrap.Modal(document.getElementById("readPagesModal"));
+const readPagesModal = new bootstrap.Modal(
+    document.getElementById("readPagesModal")
+);
 
-const modalBody = document.querySelector(".modal-body");
+const modalSearchBody = document.querySelector(".modal-search-body");
 const modalCloseBtn = document.querySelector(".btn-close");
-
 
 let searchData = {
     title: "",
@@ -138,7 +138,8 @@ function displaySearchResultsModal() {
             bookDescBtnContainer.classList.add("modal-book-desc-btn-container");
             let bookDescDiv = document.createElement("div");
             let bookDescription = document.createElement("p");
-            bookDescription.textContent = item.volumeInfo.description.substring(0,450) + "...";
+            bookDescription.textContent =
+                item.volumeInfo.description.substring(0, 450) + "...";
             bookDescDiv.append(bookDescription);
             bookDescBtnContainer.append(bookDescDiv);
             let bookBtnDiv = document.createElement("div");
@@ -155,7 +156,7 @@ function displaySearchResultsModal() {
             bookInnerContainer.append(bookDescBtnContainer);
             bookOuterContainer.append(bookInnerContainer);
 
-            modalBody.append(bookOuterContainer);
+            modalSearchBody.append(bookOuterContainer);
         }
     });
     addBookToLibrary();
@@ -181,19 +182,25 @@ function addBookToLibrary() {
 
             if (userAuth) {
                 let bookRating;
-                newBook.rating === undefined ? bookRating = "No Rating" : bookRating = newBook.rating;
+                newBook.rating === undefined
+                    ? (bookRating = "No Rating")
+                    : (bookRating = newBook.rating);
 
-                db.collection('users').doc(userAuth.uid).collection('books').doc(newBook.id).set({
-                    id: newBook.id,
-                    title: newBook.title,
-                    author: newBook.author,
-                    totalPages: newBook.totalPages,
-                    readPages: null,
-                    haveRead: 'not-read',
-                    rating: bookRating,
-                    bookCover: newBook.bookCover,
-                    userID: userAuth.uid
-                })
+                db.collection("users")
+                    .doc(userAuth.uid)
+                    .collection("books")
+                    .doc(newBook.id)
+                    .set({
+                        id: newBook.id,
+                        title: newBook.title,
+                        author: newBook.author,
+                        totalPages: newBook.totalPages,
+                        readPages: null,
+                        haveRead: "not-read",
+                        rating: bookRating,
+                        bookCover: newBook.bookCover,
+                        userID: userAuth.uid,
+                    });
             }
 
             displayLibraryBooks();
@@ -206,7 +213,6 @@ function displayLibraryBooks() {
     gridContainer.innerHTML = "";
 
     library.forEach((bookObj, idx) => {
-
         const bookItemContainer = document.createElement("div");
         bookItemContainer.classList.add("book-item-container");
         bookItemContainer.setAttribute("id", `${bookObj.id}-container`);
@@ -218,18 +224,29 @@ function displayLibraryBooks() {
 
         bookItemContainer.style.backgroundImage = `url(${bookObj.bookCover})`;
         bookItemContainer.style.backgroundSize = "cover";
-        bookButtonContainer.innerHTML =
-            `<i class="${bookObj.id} fas fa-times book-item-delete-btn "></i>`;
+        bookButtonContainer.innerHTML = `<i class="${bookObj.id} fas fa-times book-item-delete-btn "></i>`;
         const readStatusBtn = document.createElement("button");
         readStatusBtn.value = idx;
         if (bookObj.haveRead === "not-read") {
-            readStatusBtn.classList.add(`${bookObj.id}`,"status-btn", "status-not-read");
+            readStatusBtn.classList.add(
+                `${bookObj.id}`,
+                "status-btn",
+                "status-not-read"
+            );
             readStatusBtn.textContent = "Not Read";
-        } else if (bookObj.haveRead === "read"){
-            readStatusBtn.classList.add(`${bookObj.id}`, "status-btn", "status-read");
+        } else if (bookObj.haveRead === "read") {
+            readStatusBtn.classList.add(
+                `${bookObj.id}`,
+                "status-btn",
+                "status-read"
+            );
             readStatusBtn.textContent = "Read";
         } else {
-            readStatusBtn.classList.add(`${bookObj.id}`, "status-btn", "status-in-progress");
+            readStatusBtn.classList.add(
+                `${bookObj.id}`,
+                "status-btn",
+                "status-in-progress"
+            );
             readStatusBtn.textContent = "In Progress";
         }
         bookButtonContainer.append(readStatusBtn);
@@ -257,13 +274,16 @@ function deleteBook() {
 
                     if (userAuth) {
                         const db = firebase.firestore();
-                        db.collection('users').doc(userAuth.uid).collection('books').where('id', '==', icon.classList[0])
-                        .get()
-                        .then(results => {
-                            results.docs.forEach(doc => {
-                                doc.ref.delete();
-                            })
-                        })
+                        db.collection("users")
+                            .doc(userAuth.uid)
+                            .collection("books")
+                            .where("id", "==", icon.classList[0])
+                            .get()
+                            .then((results) => {
+                                results.docs.forEach((doc) => {
+                                    doc.ref.delete();
+                                });
+                            });
                     }
                     displayLibraryBooks();
                 }
@@ -277,59 +297,77 @@ function toggleStatusBtn() {
     statusBtn.forEach((btn, idx) => {
         btn.addEventListener("click", (e) => {
             e.stopPropagation();
-            console.log("STOR", localStorage, btn.classList);
-                for (prop in localStorage) {
-                    if (JSON.parse(localStorage[prop]).id === btn.classList[0]) {
-                        let db = firebase.firestore();
 
-                        if (JSON.parse(localStorage[prop]).haveRead == 'read') {
-                            let updatedStorageItem = JSON.parse(localStorage[prop]);
-                            updatedStorageItem.haveRead = 'not-read';
-                            localStorage.setItem(prop, JSON.stringify(updatedStorageItem));
-                            btn.textContent = "Not Read";
-                            library[btn.value].haveRead = 'not-read';
+            for (prop in localStorage) {
+                if (JSON.parse(localStorage[prop]).id === btn.classList[0]) {
+                    let db = firebase.firestore();
 
-                            if (userAuth) {
-                                db.collection("users").doc(userAuth.uid).collection("books").doc(btn.classList[0]).update({haveRead: 'not-read'});
-                            }
-                            btn.classList.toggle("status-read");
-                            btn.classList.toggle("status-not-read");
+                    if (JSON.parse(localStorage[prop]).haveRead == "read") {
+                        let updatedStorageItem = JSON.parse(localStorage[prop]);
+                        updatedStorageItem.haveRead = "not-read";
+                        localStorage.setItem(
+                            prop,
+                            JSON.stringify(updatedStorageItem)
+                        );
+                        btn.textContent = "Not Read";
+                        library[btn.value].haveRead = "not-read";
 
-                        } else if (JSON.parse(localStorage[prop]).haveRead == 'not-read'){
-                            let updatedStorageItem = JSON.parse(localStorage[prop]);
-                            updatedStorageItem.haveRead = 'in-progress';
-                            localStorage.setItem(prop, JSON.stringify(updatedStorageItem));
-                            btn.textContent = "In Progress";
-                            library[btn.value].haveRead = 'in-progress';
-                            
-                            if (userAuth) {
-                                db.collection("users").doc(userAuth.uid).collection("books").doc(btn.classList[0]).update({haveRead: 'in-progress'});
-                            }
-                            btn.classList.toggle("status-not-read");
-                            btn.classList.toggle("status-in-progress");
-
-                        } else {
-                            let updatedStorageItem = JSON.parse(localStorage[prop]);
-                            updatedStorageItem.haveRead = 'read';
-                            localStorage.setItem(prop, JSON.stringify(updatedStorageItem));
-                            btn.textContent = "Read";
-                            library[btn.value].haveRead = 'read';
-                            
-                            if (userAuth) {
-                                db.collection("users").doc(userAuth.uid).collection("books").doc(btn.classList[0]).update({haveRead: 'read'});
-                            }
-
-                            btn.classList.toggle("status-read");
-                            btn.classList.toggle("status-in-progress");
+                        if (userAuth) {
+                            db.collection("users")
+                                .doc(userAuth.uid)
+                                .collection("books")
+                                .doc(btn.classList[0])
+                                .update({ haveRead: "not-read" });
                         }
+                        btn.classList.toggle("status-read");
+                        btn.classList.toggle("status-not-read");
+                    } else if (
+                        JSON.parse(localStorage[prop]).haveRead == "not-read"
+                    ) {
+                        let updatedStorageItem = JSON.parse(localStorage[prop]);
+                        updatedStorageItem.haveRead = "in-progress";
+                        localStorage.setItem(
+                            prop,
+                            JSON.stringify(updatedStorageItem)
+                        );
+                        btn.textContent = "In Progress";
+                        library[btn.value].haveRead = "in-progress";
+
+                        if (userAuth) {
+                            db.collection("users")
+                                .doc(userAuth.uid)
+                                .collection("books")
+                                .doc(btn.classList[0])
+                                .update({ haveRead: "in-progress" });
+                        }
+                        btn.classList.toggle("status-not-read");
+                        btn.classList.toggle("status-in-progress");
+                    } else {
+                        let updatedStorageItem = JSON.parse(localStorage[prop]);
+                        updatedStorageItem.haveRead = "read";
+                        localStorage.setItem(
+                            prop,
+                            JSON.stringify(updatedStorageItem)
+                        );
+                        btn.textContent = "Read";
+                        library[btn.value].haveRead = "read";
+
+                        if (userAuth) {
+                            db.collection("users")
+                                .doc(userAuth.uid)
+                                .collection("books")
+                                .doc(btn.classList[0])
+                                .update({ haveRead: "read" });
+                        }
+
+                        btn.classList.toggle("status-read");
+                        btn.classList.toggle("status-in-progress");
                     }
                 }
-            });
-
+            }
         });
-    }
-
-
+    });
+}
 
 function hideBookCover(id) {
     const bookLowerDiv = document.getElementById(`${id}-lower-div`);
@@ -340,11 +378,13 @@ function hideBookCover(id) {
     });
 
     bookContainer.addEventListener("mouseout", () => {
-        let index = Object.values(localStorage).findIndex(book => {
+        let index = Object.values(localStorage).findIndex((book) => {
             book = JSON.parse(book);
-            return book.id === id
+            return book.id === id;
         });
-        bookContainer.style.backgroundImage = `url(${JSON.parse(Object.values(localStorage)[index]).bookCover})`;
+        bookContainer.style.backgroundImage = `url(${
+            JSON.parse(Object.values(localStorage)[index]).bookCover
+        })`;
         bookContainer.style.backgroundSize = "cover";
         bookContainer.style.backgroundRepeat = "no-repeat";
 
@@ -356,24 +396,26 @@ function hideBookCover(id) {
 
 function displayDetails(id) {
     const bookLowerDiv = document.getElementById(`${id}-lower-div`);
-    let index = Object.values(localStorage).findIndex(book => {
+    let index = Object.values(localStorage).findIndex((book) => {
         book = JSON.parse(book);
-        return book.id === id
+        return book.id === id;
     });
 
     const title = document.createElement("p");
     title.textContent = JSON.parse(Object.values(localStorage)[index]).title;
-    title.classList.add('book-details');
+    title.classList.add("book-details");
     bookLowerDiv.append(title);
 
     const author = document.createElement("p");
     author.textContent = JSON.parse(Object.values(localStorage)[index]).author;
-    author.classList.add('book-details');
+    author.classList.add("book-details");
     bookLowerDiv.append(author);
 
     const rating = document.createElement("p");
-    rating.innerHTML = `<p>${calculateRating(JSON.parse(Object.values(localStorage)[index]).rating)}</p>`;
-    rating.classList.add('book-details');
+    rating.innerHTML = `<p>${calculateRating(
+        JSON.parse(Object.values(localStorage)[index]).rating
+    )}</p>`;
+    rating.classList.add("book-details");
     bookLowerDiv.append(rating);
 }
 
@@ -394,8 +436,8 @@ function calculateRating(number) {
     }
 }
 
-mySearchModal.addEventListener("hide.bs.modal", (e) => { 
-    modalBody.innerHTML = "";
+mySearchModal.addEventListener("hide.bs.modal", (e) => {
+    modalSearchBody.innerHTML = "";
     searchResults = null;
     titleInput.value = "";
     authorInput.value = "";
@@ -404,8 +446,10 @@ mySearchModal.addEventListener("hide.bs.modal", (e) => {
 
 function googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
-        .then(result => {
+    firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
             userAuth = result.user;
             console.log("userAuth", userAuth);
             localStorageToFirestore(userAuth.uid);
@@ -413,32 +457,38 @@ function googleLogin() {
 
             setTimeout(() => {
                 displayLibraryBooks();
-            },800);
-        })
+            }, 800);
+        });
 }
 
 function localStorageToFirestore(userID) {
     const db = firebase.firestore();
 
     if (localStorage.length > 0) {
-        Object.values(localStorage).forEach(bookObj => {
+        Object.values(localStorage).forEach((bookObj) => {
             let parsedObj = JSON.parse(bookObj);
-    
+
             let bookRating;
-            bookObj.rating === undefined ? bookRating = "No Rating" : bookRating = newBook.rating;
-    
-            db.collection('users').doc(userID).collection('books').doc(parsedObj.id).set({
-                id: parsedObj.id,
-                title: parsedObj.title,
-                author: parsedObj.author,
-                totalPages: parsedObj.totalPages,
-                readPages: null,
-                haveRead: parsedObj.haveRead,
-                rating: bookRating,
-                bookCover: parsedObj.bookCover,
-                userID: userAuth.uid
-             })
-        })
+            bookObj.rating === undefined
+                ? (bookRating = "No Rating")
+                : (bookRating = newBook.rating);
+
+            db.collection("users")
+                .doc(userID)
+                .collection("books")
+                .doc(parsedObj.id)
+                .set({
+                    id: parsedObj.id,
+                    title: parsedObj.title,
+                    author: parsedObj.author,
+                    totalPages: parsedObj.totalPages,
+                    readPages: null,
+                    haveRead: parsedObj.haveRead,
+                    rating: bookRating,
+                    bookCover: parsedObj.bookCover,
+                    userID: userAuth.uid,
+                });
+        });
     }
 }
 
@@ -446,27 +496,64 @@ function getLoggedInUserBooks(userID) {
     library = [];
     localStorage.clear();
     const db = firebase.firestore();
-    db.collection('users').doc(userID).collection('books').where('userID', '==', userID)
+    db.collection("users")
+        .doc(userID)
+        .collection("books")
+        .where("userID", "==", userID)
         .get()
-        .then(userBooks => {
-            userBooks.forEach((book, idx) =>{
+        .then((userBooks) => {
+            userBooks.forEach((book, idx) => {
                 library.push(book.data());
-                localStorage.setItem(localStorage.length, JSON.stringify(book.data()));
+                localStorage.setItem(
+                    localStorage.length,
+                    JSON.stringify(book.data())
+                );
                 console.log(localStorage);
-            })
-        })
+            });
+        });
 }
 
 function readPagesEvent() {
-    const bookItems = document.querySelectorAll('.book-item-container');
-    bookItems.forEach(bookItem => {
-        bookItem.addEventListener('click', (e) => {
-            let bookID = e.target.id.split('-')[0];
+    const bookItems = document.querySelectorAll(".book-item-container");
+    const modalReadPagesBody = document.querySelector(".modal-read-pages-body");
+    bookItems.forEach((bookItem) => {
+        bookItem.addEventListener("click", (e) => {
+            let bookID = e.target.id.split("-")[0];
             readPagesModal.toggle();
 
-            let input = document.createElement('input');
-            let submitBtn = document.createElement('button');
+            let input = document.createElement("input");
+            let submitBtn = document.createElement("button");
+            submitBtn.textContent = "Save";
+            modalReadPagesBody.append(input);
+            modalReadPagesBody.append(submitBtn);
+            submitBtn.addEventListener("click", () => {
+                console.log(input.value);
 
-        })
-    })
+                for (prop in localStorage) {
+                    if (JSON.parse(localStorage[prop]).id === bookID) {
+                        let db = firebase.firestore();
+
+                        let updatedStorageItem = JSON.parse(localStorage[prop]);
+                        updatedStorageItem.readPages = input.value;
+                        localStorage.setItem(
+                            prop,
+                            JSON.stringify(updatedStorageItem)
+                        );
+                        let index = library.findIndex(bookObj => bookObj.id === bookID);
+                        library[index].readPages = input.value;
+
+                        if (userAuth) {
+                            db.collection("users")
+                                .doc(userAuth.uid)
+                                .collection("books")
+                                .doc(bookID)
+                                .update({ readPages: input.value });
+                        }
+                    }
+                }
+
+
+            });
+        });
+    });
 }
