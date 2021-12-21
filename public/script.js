@@ -35,7 +35,6 @@ const myReadPagesModal = document.getElementById("readPagesModal");
 const modalReadPagesBody = document.querySelector(".modal-read-pages-body");
 
 
-
 let searchData = {
     title: "",
     author: "",
@@ -531,7 +530,7 @@ function readPagesEvent() {
             modalReadPagesBody.append(input);
             modalReadPagesBody.append(submitBtn);
             submitBtn.addEventListener("click", () => {
-                console.log(input.value);
+                readPagesModal.hide();
 
                 for (prop in localStorage) {
                     if (JSON.parse(localStorage[prop]).id === bookID) {
