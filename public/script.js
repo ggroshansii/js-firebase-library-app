@@ -28,9 +28,13 @@ const mySearchModal = document.getElementById("bookModal"); //modal itself
 const readPagesModal = new bootstrap.Modal(
     document.getElementById("readPagesModal")
 );
-
 const modalSearchBody = document.querySelector(".modal-search-body");
 const modalCloseBtn = document.querySelector(".btn-close");
+
+const myReadPagesModal = document.getElementById("readPagesModal");
+const modalReadPagesBody = document.querySelector(".modal-read-pages-body");
+
+
 
 let searchData = {
     title: "",
@@ -515,7 +519,7 @@ function getLoggedInUserBooks(userID) {
 
 function readPagesEvent() {
     const bookItems = document.querySelectorAll(".book-item-container");
-    const modalReadPagesBody = document.querySelector(".modal-read-pages-body");
+
     bookItems.forEach((bookItem) => {
         bookItem.addEventListener("click", (e) => {
             let bookID = e.target.id.split("-")[0];
@@ -554,6 +558,17 @@ function readPagesEvent() {
 
 
             });
+
         });
     });
+}
+
+myReadPagesModal.addEventListener("hide.bs.modal", (e) => {
+    removeAllChildNodes(modalReadPagesBody);
+});
+
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
 }
