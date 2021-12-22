@@ -201,22 +201,6 @@ nav {
     background-color: #D996B4;
 }
 
-.description-outer-container {
-    max-width: 1200px;
-    background-color: #D6EADF;
-    padding: 2rem 0rem;
-}
-
-.description-inner-container {
-    width: 80vw;
-    max-width: 1000px;
-    margin: auto;
-    padding: 1rem;
-    background-color: #F2F8F4;
-    border: 1px solid black;
-    border-radius: 1rem;
-    
-}
 
 .logo-image {
     margin-top: 1rem;
