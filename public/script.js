@@ -523,8 +523,9 @@ function readPagesEvent() {
         bookItem.addEventListener("click", (e) => {
             let bookID = e.target.id.split("-")[0];
             readPagesModal.toggle();
-
+            console.log("BOOKITEM ", bookItem);
             let input = document.createElement("input");
+            input.placeholder = `Enter Pages Read for `;
             let submitBtn = document.createElement("button");
             submitBtn.textContent = "Save";
             modalReadPagesBody.append(input);
