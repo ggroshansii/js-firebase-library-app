@@ -485,7 +485,7 @@ function localStorageToFirestore(userID) {
                     title: parsedObj.title,
                     author: parsedObj.author,
                     totalPages: parsedObj.totalPages,
-                    readPages: null,
+                    readPages: parsedObj.readPages,
                     haveRead: parsedObj.haveRead,
                     rating: bookRating,
                     bookCover: parsedObj.bookCover,
