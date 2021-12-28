@@ -106,7 +106,6 @@ body {
     margin: auto;
     position: relative;
     border-radius: 10px;
-    transition: all 2s;
 }
 
 .book-item-container:hover {
