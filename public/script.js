@@ -423,6 +423,8 @@ function displayDetails(id) {
 
     const progressWrapper = document.createElement('div');
     progressWrapper.classList.add('progress');
+    progressWrapper.style.width = '75%';
+    progressWrapper.style.margin = 'auto';
     const progress = document.createElement('div');
     progress.classList.add('progress-bar');
     progress.style.width = `${(library[index].readPages / library[index].totalPages) * 100}%`;
