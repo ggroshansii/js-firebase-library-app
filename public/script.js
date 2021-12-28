@@ -420,6 +420,14 @@ function displayDetails(id) {
     )}</p>`;
     rating.classList.add("book-details");
     bookLowerDiv.append(rating);
+
+    const progressWrapper = document.createElement('div');
+    progressWrapper.classList.add('progress');
+    const progress = document.createElement('div');
+    progress.classList.add('progress-bar');
+    progress.style.width = `${(library[index].readPages / library[index].totalPages) * 100}%`;
+    progressWrapper.append(progress);
+    bookLowerDiv.append(progressWrapper);
 }
 
 function calculateRating(number) {
