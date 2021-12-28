@@ -376,7 +376,7 @@ function hideBookCover(id) {
     const bookLowerDiv = document.getElementById(`${id}-lower-div`);
     const bookContainer = document.getElementById(`${id}-container`);
     bookLowerDiv.addEventListener("mouseover", () => {
-        bookContainer.style.backgroundImage = "";
+        bookContainer.style.backgroundImage = "none";
         bookContainer.style.backgroundColor = "white";
         displayDetails(id);
     });
