@@ -21,7 +21,8 @@ body {
     min-height: 20vh;
     position: relative;
     border-bottom: 1px solid black;
-    background-color: #809BCE;
+    background-color: #0096c7;
+
 }
 
 .main-heading-container {
@@ -58,7 +59,7 @@ body {
     min-height: 85vh;
     padding: 2rem;
     gap: 1.5rem;
-    background-color: #D6EADF;
+    background-color: #caf0f8;
 }
 
 
@@ -106,7 +107,6 @@ body {
     margin: auto;
     position: relative;
     border-radius: 10px;
-    transition: all 2s;
 }
 
 .book-item-container:hover {
@@ -174,31 +174,33 @@ body {
 }
 
 nav {
-    margin: auto;
+    margin: 1rem auto;
 }
 
 .google-login-btn {
  height: 40px;
  width: 125px;
  margin-left: 0.25rem;
- background-color: #DFA5BF;
+ background-color: #ade8f4;
  border: none;
+ color: black;
 }
 
 .google-login-btn:hover {
-    background-color: #D996B4;
+    background-color: #ade8f4;
 }
 
 .search-books-collapse-btn {
     height: 40px;
     width: 125px;
     margin-right: 0.25rem;
-    background-color: #DFA5BF;
+    background-color: #ade8f4;
     border: none;
+    color: black;
 }
 
 .search-books-collapse-btn:hover {
-    background-color: #D996B4;
+    background-color: #ade8f4;
 }
 
 
@@ -222,10 +224,10 @@ nav {
     height: 40px;
     width: 125px;
     margin-left: 0.25rem;
-    background-color: #DFA5BF;
+    background-color: #0077b6;
     border: none;
    }
    
    .search-btn:hover {
-       background-color: #D996B4;
+       background-color: #0077b6;
    }
