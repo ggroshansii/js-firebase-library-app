@@ -150,7 +150,7 @@ function displaySearchResultsModal() {
             bookAddBtn.textContent = "Add Book to Library";
             bookAddBtn.classList.add(
                 "btn",
-                "btn-success",
+                "btn-primary",
                 "modal-book-add-btn"
             );
             bookBtnDiv.append(bookAddBtn);
