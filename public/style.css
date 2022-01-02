@@ -232,3 +232,8 @@ nav {
    .search-btn:hover {
        background-color: #0077b6;
    }
+
+.display-user-stats-container {
+    display: flex;
+    justify-content: space-around;
+}
