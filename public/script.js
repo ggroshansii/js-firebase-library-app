@@ -263,6 +263,7 @@ function displayLibraryBooks() {
     deleteBook();
     toggleStatusBtn();
     readPagesEvent();
+    userStatsDisplay();
 }
 
 function deleteBook() {
@@ -583,3 +584,22 @@ function removeAllChildNodes(parent) {
         parent.removeChild(parent.firstChild);
     }
 }
+
+// function userStatsDisplay() {
+//     const totalBooksStat = document.querySelector('.total-books-stat');
+//     const totalPagesStat = document.querySelector('.total-pages-stat');
+//     totalBooksStat.textContent = localStorage.length;
+//     console.log("1")
+//     let libraryTotalPages = 0;
+//     let libraryPageCount = 0;
+//     console.log("2")
+//     for (prop in localStorage) {
+//         if (JSON.parse(localStorage[prop]).totalPages) {
+//             libraryTotalPages += JSON.parse(localStorage[prop].totalPages)
+//         }
+//         if (JSON.parse(localStorage[prop]).readPages) {
+//             libraryPageCount += JSON.parse(localStorage[prop].readPages)
+//         }
+//     }
+//     console.log("3")
+// }
