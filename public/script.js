@@ -585,21 +585,21 @@ function removeAllChildNodes(parent) {
     }
 }
 
-// function userStatsDisplay() {
-//     const totalBooksStat = document.querySelector('.total-books-stat');
-//     const totalPagesStat = document.querySelector('.total-pages-stat');
-//     totalBooksStat.textContent = localStorage.length;
-//     console.log("1")
-//     let libraryTotalPages = 0;
-//     let libraryPageCount = 0;
-//     console.log("2")
-//     for (prop in localStorage) {
-//         if (JSON.parse(localStorage[prop]).totalPages) {
-//             libraryTotalPages += JSON.parse(localStorage[prop].totalPages)
-//         }
-//         if (JSON.parse(localStorage[prop]).readPages) {
-//             libraryPageCount += JSON.parse(localStorage[prop].readPages)
-//         }
-//     }
-//     console.log("3")
-// }
+function userStatsDisplay() {
+    const totalBooksStat = document.querySelector('.total-books-stat');
+    const totalPagesStat = document.querySelector('.total-pages-stat');
+    totalBooksStat.textContent = localStorage.length;
+    console.log("1")
+    let libraryTotalPages = 0;
+    let libraryPageCount = 0;
+    console.log("2")
+    for (let i = 0; i < localStorage.length; i++) {
+        if (localStorage.hasOwnProperty(i) && JSON.parse(localStorage[i]).totalPages) {
+            libraryTotalPages += Number(JSON.parse(localStorage[i]).totalPages)
+        }
+        if (localStorage.hasOwnProperty(i) && JSON.parse(localStorage[i]).readPages) {
+            libraryPageCount += Number(JSON.parse(localStorage[i]).readPages)
+        }
+    }
+    totalPagesStat.textContent = `${libraryPageCount} / ${libraryTotalPages}`
+}
