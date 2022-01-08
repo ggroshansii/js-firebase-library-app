@@ -476,6 +476,14 @@ function googleLogin() {
         });
 }
 
+function googleLogout() {
+    firebase.auth().signOut().then(() => {
+        // Sign-out successful.
+      }).catch((error) => {
+        // An error happened.
+      });
+}
+
 function localStorageToFirestore(userID) {
     const db = firebase.firestore();
 

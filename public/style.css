@@ -179,7 +179,7 @@ nav {
     margin: 1rem auto;
 }
 
-.google-login-btn {
+.google-login-btn, .google-logout-btn{
  height: 40px;
  width: 125px;
  margin-left: 0.25rem;
@@ -188,7 +188,7 @@ nav {
  color: black;
 }
 
-.google-login-btn:hover {
+.google-login-btn:hover, .google-logout-btn:hover {
     background-color: #ade8f4;
 }
 
