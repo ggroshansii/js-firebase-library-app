@@ -34,6 +34,8 @@ const modalCloseBtn = document.querySelector(".btn-close");
 const myReadPagesModal = document.getElementById("readPagesModal");
 const modalReadPagesBody = document.querySelector(".modal-read-pages-body");
 
+const loginBtn = document.querySelector(".google-login-btn");
+const logoutBtn = document.querySelector(".google-logout-btn");
 
 let searchData = {
     title: "",
@@ -474,6 +476,9 @@ function googleLogin() {
                 displayLibraryBooks();
             }, 800);
         });
+    
+    loginBtn.classList.add('hide');
+    logoutBtn.classList.remove('hide');
 }
 
 function googleLogout() {
@@ -482,6 +487,9 @@ function googleLogout() {
       }).catch((error) => {
         // An error happened.
       });
+
+      logoutBtn.classList.add('hide');
+      loginBtn.classList.remove('hide');
 }
 
 function localStorageToFirestore(userID) {
