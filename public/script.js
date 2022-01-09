@@ -468,28 +468,29 @@ function googleLogin() {
         .signInWithPopup(provider)
         .then((result) => {
             userAuth = result.user;
-            console.log("userAuth", userAuth);
             localStorageToFirestore(userAuth.uid);
             getLoggedInUserBooks(userAuth.uid);
-
+            loginBtn.classList.add('hide');
+            logoutBtn.classList.remove('hide');
+            
             setTimeout(() => {
                 displayLibraryBooks();
             }, 800);
         });
-    
-    loginBtn.classList.add('hide');
-    logoutBtn.classList.remove('hide');
+
+
+
 }
 
 function googleLogout() {
     firebase.auth().signOut().then(() => {
-        // Sign-out successful.
+                logoutBtn.classList.add('hide');
+                loginBtn.classList.remove('hide');
       }).catch((error) => {
         // An error happened.
       });
 
-      logoutBtn.classList.add('hide');
-      loginBtn.classList.remove('hide');
+
 }
 
 function localStorageToFirestore(userID) {
